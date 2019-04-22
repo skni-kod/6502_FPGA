@@ -92,7 +92,7 @@ module cpu_core_test;
 		ROM[19] = 8'h98; //TYA
 		ROM[20] = 8'hE8; //INX
 		ROM[21] = 8'hC8; //INY
-		ROM[22] = 8'hXA; //DEX
+		ROM[22] = 8'hCA; //DEX
 		ROM[23] = 8'h88; //DEY
 		din = ROM[0];
 
