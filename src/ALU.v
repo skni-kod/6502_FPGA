@@ -47,6 +47,7 @@ module ALU(
 	localparam ALU_OP_SUB = 8'h23;
 	localparam ALU_OP_DEC = 8'h24;
 
+	localparam ALU_OP_PASS_A = 8'h31;
 	//localparam ALU_OP_CMP = 8'h31;
  
 	always @(*)
@@ -77,6 +78,8 @@ module ALU(
 				end
 			ALU_OP_DEC:
 				y = a - 1'b1;
+			ALU_OP_PASS_A:
+				{carry_out, y} = 8'b0 + a;
 			/*ALU_OP_CMP:
 				begin
 					if(a >= b)

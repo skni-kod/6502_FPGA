@@ -1,4 +1,4 @@
-`timescale 1ns / 10ps
+`timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -60,6 +60,8 @@ localparam ALU_OP_ADD = 8'h21;
 localparam ALU_OP_INC = 8'h22;
 localparam ALU_OP_SUB = 8'h23;
 localparam ALU_OP_DEC = 8'h24;
+
+localparam ALU_OP_PASS_A = 8'h31;
 
 reg [7:0] A;
 reg [7:0] X;
@@ -154,7 +156,7 @@ begin
 	addr = pc;
 	if(state == ST_RUN)
 		case(opcode)
-			8'hA9: //LDA
+			8'hA9: //LDA, #
 			begin
 				case(opcode_state)
 					3'd0:
@@ -171,7 +173,7 @@ begin
 					end
 				endcase
 			end
-			8'hA2: //LDX
+			8'hA2: //LDX, #
 			begin
 				case(opcode_state)
 					3'd0:
@@ -188,7 +190,7 @@ begin
 					end
 				endcase
 			end
-			8'hA0: //LDY
+			8'hA0: //LDY, #
 			begin
 				case(opcode_state)
 					3'd0:
@@ -201,6 +203,134 @@ begin
 					begin
 						Y = din;
 						alu_cin = alu_cout;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'hAA: //TAX, i
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						alu_opcode = ALU_OP_PASS_A;
+						input_1_select = ALU_IN_MUX_A;
+						opcode_state = opcode_state + 1;
+					end
+					3'd1:
+					begin
+						X = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'h8A: //TXA, i
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						alu_opcode = ALU_OP_PASS_A;
+						input_1_select = ALU_IN_MUX_X;
+						opcode_state = opcode_state + 1;
+					end
+					3'd1:
+					begin
+						A = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'hA8: //TAY, i
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						alu_opcode = ALU_OP_PASS_A;
+						input_1_select = ALU_IN_MUX_A;
+						opcode_state = opcode_state + 1;
+					end
+					3'd1:
+					begin
+						Y = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'h98: //TYA, i
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						alu_opcode = ALU_OP_PASS_A;
+						input_1_select = ALU_IN_MUX_Y;
+						opcode_state = opcode_state + 1;
+					end
+					3'd1:
+					begin
+						A = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'hE8: //INX, i
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						alu_opcode = ALU_OP_INC;
+						input_1_select = ALU_IN_MUX_X;
+						opcode_state = opcode_state + 1;
+					end
+					3'd1:
+					begin
+						X = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'hCA: //DEX, i
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						alu_opcode = ALU_OP_DEC;
+						input_1_select = ALU_IN_MUX_X;
+						opcode_state = opcode_state + 1;
+					end
+					3'd1:
+					begin
+						X = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'hC8: //INY, i
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						alu_opcode = ALU_OP_INC;
+						input_1_select = ALU_IN_MUX_Y;
+						opcode_state = opcode_state + 1;
+					end
+					3'd1:
+					begin
+						Y = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'h88: //DEY, i
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						alu_opcode = ALU_OP_DEC;
+						input_1_select = ALU_IN_MUX_Y;
+						opcode_state = opcode_state + 1;
+					end
+					3'd1:
+					begin
+						Y = alu_out;
 						done = 8'd1;
 					end
 				endcase
