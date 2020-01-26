@@ -1,25 +1,25 @@
 `timescale 1ns / 1ps
 
 ////////////////////////////////////////////////////////////////////////////////
-// Company: 
+// Company:
 // Engineer:
 //
 // Create Date:   22:46:56 04/19/2019
 // Design Name:   cpu_core
 // Module Name:   E:/FPGA/CPU/cpu_core_test.v
 // Project Name:  CPU
-// Target Device:  
-// Tool versions:  
-// Description: 
+// Target Device:
+// Tool versions:
+// Description:
 //
 // Verilog Test Fixture created by ISE for module: cpu_core
 //
 // Dependencies:
-// 
+//
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//
 ////////////////////////////////////////////////////////////////////////////////
 
 module cpu_core_test;
@@ -45,12 +45,12 @@ module cpu_core_test;
 
 	// Instantiate the Unit Under Test (UUT)
 	cpu_core uut (
-		.clk(clk), 
-		.din(din), 
-		.addr(addr), 
-		.clk_out(clk_out), 
-		.a_out(a_out), 
-		.x_out(x_out), 
+		.clk(clk),
+		.din(din),
+		.addr(addr),
+		.clk_out(clk_out),
+		.a_out(a_out),
+		.x_out(x_out),
 		.y_out(y_out),
 		.reset(reset),
 		.opcode_out(opcode_out),
@@ -71,17 +71,17 @@ module cpu_core_test;
 		ROM[4] = 8'h69;
 		ROM[5] = 8'd4;*/
 		ROM[0] = 8'hA9; //LDA, #3
-		ROM[1] = 8'h03; 
+		ROM[1] = 8'h03;
 		ROM[2] = 8'h38; //SEC
 		ROM[3] = 8'hE9; //SBC, #2
-		ROM[4] = 8'h02; 
+		ROM[4] = 8'h02;
 		ROM[5] = 8'h18; //CLC
 		ROM[6] = 8'h69; //ADC, #4
-		ROM[7] = 8'h04; 
+		ROM[7] = 8'h04;
 		ROM[8] = 8'h29; //AND, #5
 		ROM[9] = 8'h05;
 		ROM[10] = 8'h49; //EOR, #6
-		ROM[11] = 8'h06; 
+		ROM[11] = 8'h06;
 		ROM[12] = 8'h09; //OR, #7
 		ROM[13] = 8'h07;
 		ROM[14] = 8'hAA; //TAX
@@ -98,7 +98,7 @@ module cpu_core_test;
 
 		// Wait 100 ns for global reset to finish
 		#100;
-      //$monitor($time, ": A=%b X=%b Y=%b opcode=%b, pc=%b opstate=%b, addr=%b, aluop=%b, alu_out=%b, data_in=%d", 
+      //$monitor($time, ": A=%b X=%b Y=%b opcode=%b, pc=%b opstate=%b, addr=%b, aluop=%b, alu_out=%b, data_in=%d",
 		//a_out, x_out, y_out, opcode_out, pc_out, opcode_state_out, addr, alu_opcode_out, alu_out_out, din);
 		$monitor($time, ": A=%h X=%h Y=%h c=%b opcode=%h", a_out, x_out, y_out, alu_cout_out, opcode_out);
 		// Add stimulus here
@@ -107,11 +107,11 @@ module cpu_core_test;
 			#5 clk = ~clk;
 		end
 	end
-	
+
 	always @(addr)
 	begin
 		din = ROM[addr];
 	end
-      
+
 endmodule
 

@@ -1,21 +1,21 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date:    23:14:43 04/16/2019 
-// Design Name: 
-// Module Name:    cpu_core 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
+// Company:
+// Engineer:
 //
-// Dependencies: 
+// Create Date:    23:14:43 04/16/2019
+// Design Name:
+// Module Name:    cpu_core
+// Project Name:
+// Target Devices:
+// Tool versions:
+// Description:
 //
-// Revision: 
+// Dependencies:
+//
+// Revision:
 // Revision 0.01 - File Created
-// Additional Comments: 
+// Additional Comments:
 //
 //////////////////////////////////////////////////////////////////////////////////
 module cpu_core(
@@ -84,21 +84,21 @@ reg [2:0] input_1_select;
 reg [2:0] input_2_select;
 
 ALU_COMPLETE alu(
-	.input_1_select(input_1_select), 
-	.input_2_select(input_2_select), 
-	.a_reg(A), 
-	.x_reg(X), 
-	.y_reg(Y), 
-	.data_in(din), 
-	.sp(stack_pointer), 
-	.alu_opcode(alu_opcode), 
-	.out(alu_out), 
-	.cin(alu_cin), 
+	.input_1_select(input_1_select),
+	.input_2_select(input_2_select),
+	.a_reg(A),
+	.x_reg(X),
+	.y_reg(Y),
+	.data_in(din),
+	.sp(stack_pointer),
+	.alu_opcode(alu_opcode),
+	.out(alu_out),
+	.cin(alu_cin),
 	.cout(alu_cout)
 );
 assign clk_out = clk;
 
-//STATE MACHINE	
+//STATE MACHINE
 always@(posedge clk or posedge reset)
 begin
 	if(reset)
@@ -352,7 +352,7 @@ begin
 						A = alu_out;
 						alu_cin = alu_cout;
 						done = 8'd1;
-					end	
+					end
 				endcase
 			end
 			8'hE9: //SBC, #
@@ -412,7 +412,7 @@ begin
 						A = alu_out;
 						alu_cin = alu_cout;
 						done = 8'd1;
-					end	
+					end
 				endcase
 			end
 			8'h49: //EOR, i
@@ -432,7 +432,7 @@ begin
 						A = alu_out;
 						alu_cin = alu_cout;
 						done = 8'd1;
-					end	
+					end
 				endcase
 			end
 			8'h38: //SEC, i
