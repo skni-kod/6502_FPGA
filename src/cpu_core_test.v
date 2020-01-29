@@ -94,6 +94,10 @@ module cpu_core_test;
 		ROM[21] = 8'hC8; //INY
 		ROM[22] = 8'hCA; //DEX
 		ROM[23] = 8'h88; //DEY
+		ROM[24] = 8'hA5; //LDA, $01
+		ROM[25] = 8'h01;
+		ROM[26] = 8'hB5; //LDA, $01,X
+		ROM[27] = 8'h01;
 		din = ROM[0];
 
 		// Wait 100 ns for global reset to finish

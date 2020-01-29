@@ -173,6 +173,58 @@ begin
 					end
 				endcase
 			end
+			8'hA5: //LDA, $
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						pc = pc + 1;
+						opcode_state = opcode_state + 1;
+						addr = pc;
+					end
+					3'd1:
+					begin
+						opcode_state = opcode_state +1;
+						addr = din;
+					end
+					3'd2:
+					begin
+						A = din;
+						alu_cin = alu_cout;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'hB5: //LDA, $,X
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						pc = pc + 1;
+						opcode_state = opcode_state + 1;
+						addr = pc;
+					end
+					3'd1:
+					begin
+						opcode_state = opcode_state + 1;
+						alu_opcode = ALU_OP_ADD;
+						addr = din;
+						input_1_select = ALU_IN_MUX_DATA;
+						input_2_select = ALU_IN_MUX_X;
+					end
+					3'd2:
+					begin
+						opcode_state = opcode_state +1;
+						addr = alu_out;
+					end
+					3'd3:
+					begin
+						A = din;
+						alu_cin = alu_cout;
+						done = 8'd1;
+					end
+				endcase
+			end
 			8'hA2: //LDX, #
 			begin
 				case(opcode_state)
