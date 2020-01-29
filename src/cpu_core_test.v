@@ -98,6 +98,12 @@ module cpu_core_test;
 		ROM[25] = 8'h01;
 		ROM[26] = 8'hB5; //LDA, $01,X
 		ROM[27] = 8'h01;
+		ROM[28] = 8'hAD;
+		ROM[29] = 8'h01;
+		ROM[30] = 8'h00;
+		ROM[31] = 8'hFE;
+		ROM[32] = 8'hFE;
+		ROM[33] = 8'hFE;
 		din = ROM[0];
 
 		// Wait 100 ns for global reset to finish

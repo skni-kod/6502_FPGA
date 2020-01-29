@@ -73,6 +73,7 @@ reg [15:0] pc = 3'd0;
 reg [2:0] state = 3'd0;
 reg [2:0] opcode_state = 3'd0;
 reg [7:0] opcode = 8'd0;
+reg addr_state = 1'd0;
 reg done = 8'd0;
 
 wire [7:0] alu_out;
@@ -130,6 +131,7 @@ begin
 				begin
 					state = ST_FETCH;
 					opcode_state = 3'd0;
+					addr_state = 1'd0;
 					pc = pc + 1;
 					done = 3'd0;
 				end
@@ -184,7 +186,7 @@ begin
 					end
 					3'd1:
 					begin
-						opcode_state = opcode_state +1;
+						opcode_state = opcode_state + 1;
 						addr = din;
 					end
 					3'd2:
@@ -214,10 +216,45 @@ begin
 					end
 					3'd2:
 					begin
-						opcode_state = opcode_state +1;
+						opcode_state = opcode_state + 1;
 						addr = alu_out;
 					end
 					3'd3:
+					begin
+						A = din;
+						alu_cin = alu_cout;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'hAD: //LDA, $
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						pc = pc + 1;
+						opcode_state = opcode_state + 1;
+						addr = pc;
+					end
+					3'd1:
+					begin
+					case(addr_state)
+						1'd0:
+						begin
+							addr = {din, 8'd0};
+							A = din;
+							pc = pc + 1;
+							addr = pc;
+							addr_state = addr_state + 1;
+						end
+						1'd1:
+						begin
+							addr = addr || {8'd0, din};
+							opcode_state = opcode_state + 1;
+						end
+					endcase
+					end
+					3'd2:
 					begin
 						A = din;
 						alu_cin = alu_cout;
