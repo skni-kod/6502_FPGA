@@ -171,7 +171,6 @@ begin
 					3'd1:
 					begin
 						A = din;
-						alu_cin = alu_cout;
 						done = 8'd1;
 					end
 				endcase
@@ -193,7 +192,6 @@ begin
 					3'd2:
 					begin
 						A = din;
-						alu_cin = alu_cout;
 						done = 8'd1;
 					end
 				endcase
@@ -222,7 +220,6 @@ begin
 					3'd3:
 					begin
 						A = din;
-						alu_cin = alu_cout;
 						done = 8'd1;
 					end
 				endcase
@@ -251,7 +248,6 @@ begin
 					3'd3:
 					begin
 						A = din;
-						alu_cin = alu_cout;
 						done = 8'd1;
 					end
 				endcase
@@ -298,7 +294,6 @@ begin
 					3'd4:
 					begin
 						A = din;
-						alu_cin = alu_cout;
 						done = 8'd1;
 					end
 				endcase
@@ -315,7 +310,6 @@ begin
 					3'd1:
 					begin
 						X = din;
-						alu_cin = alu_cout;
 						done = 8'd1;
 					end
 				endcase
@@ -332,7 +326,6 @@ begin
 					3'd1:
 					begin
 						Y = din;
-						alu_cin = alu_cout;
 						done = 8'd1;
 					end
 				endcase
@@ -520,7 +513,6 @@ begin
 					3'd1:
 					begin
 						A = alu_out;
-						alu_cin = alu_cout;
 						done = 8'd1;
 					end
 				endcase
@@ -540,7 +532,6 @@ begin
 					3'd1:
 					begin
 						A = alu_out;
-						alu_cin = alu_cout;
 						done = 8'd1;
 					end
 				endcase
@@ -560,7 +551,6 @@ begin
 					3'd1:
 					begin
 						A = alu_out;
-						alu_cin = alu_cout;
 						done = 8'd1;
 					end
 				endcase
