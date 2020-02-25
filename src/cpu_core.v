@@ -32,7 +32,8 @@ module cpu_core(
 	output reg[3:0] opcode_state_out,
 	output reg[7:0] alu_opcode_out,
 	output reg[7:0] alu_out_out,
-	output reg alu_cout_out
+	output reg alu_cout_out,
+	output reg alu_cin_out
     );
 
 localparam ST_RESET = 3'd0;
@@ -138,7 +139,7 @@ begin
 		endcase
 end
 
-always@(A, X, Y, opcode, pc, opcode_state, alu_opcode, alu_out, alu_cout)
+always@(A, X, Y, opcode, pc, opcode_state, alu_opcode, alu_out, alu_cout, alu_cin)
 begin
 	a_out = A;
 	x_out = X;
@@ -149,6 +150,7 @@ begin
 	alu_opcode_out = alu_opcode;
 	alu_out_out = alu_out;
 	alu_cout_out = alu_cout;
+	alu_cin_out = alu_cin;
 end
 
 //MICROCODE

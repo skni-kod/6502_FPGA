@@ -42,6 +42,7 @@ module cpu_core_test;
 	wire[7:0] alu_opcode_out;
 	wire[7:0] alu_out_out;
 	wire alu_cout_out;
+	wire alu_cin_out;
 
 	// Instantiate the Unit Under Test (UUT)
 	cpu_core uut (
@@ -58,7 +59,8 @@ module cpu_core_test;
 		.opcode_state_out(opcode_state_out),
 		.alu_opcode_out(alu_opcode_out),
 		.alu_out_out(alu_out_out),
-		.alu_cout_out(alu_cout_out)
+		.alu_cout_out(alu_cout_out),
+		.alu_cin_out(alu_cin_out)
 	);
 
 	initial begin
@@ -104,7 +106,8 @@ module cpu_core_test;
 		ROM[31] = 8'hBD;
 		ROM[32] = 8'h00;
 		ROM[33] = 8'h00;
-		ROM[127] = 8'hF0;
+		ROM[126] = 8'hF0;
+		ROM[254] = 8'hAA;
 		ROM[255] = 8'hFE;
 		ROM[256] = 8'hEF;
 		ROM[257] = 8'hDF;
@@ -112,8 +115,8 @@ module cpu_core_test;
 
 		// Wait 100 ns for global reset to finish
 		#100;
-		$monitor($time, ": A=%h X=%h Y=%h opcode=%h, pc=%h opstate=%d, addr=%h, aluop=%b, alu_out=%h, alu_cout=%h, data_in=%h",
-		a_out, x_out, y_out, opcode_out, pc_out, opcode_state_out, addr, alu_opcode_out, alu_out_out, alu_cout_out, din);
+		$monitor($time, ": A=%h X=%h Y=%h opcode=%h, pc=%h opstate=%d, addr=%h, aluop=%b, alu_out=%h, alu_cout=%h, alu_cin=%h, data_in=%h",
+		a_out, x_out, y_out, opcode_out, pc_out, opcode_state_out, addr, alu_opcode_out, alu_out_out, alu_cout_out, alu_cin_out, din);
 		//$monitor($time, ": A=%h X=%h Y=%h c=%b opcode=%h", a_out, x_out, y_out, alu_cout_out, opcode_out);
 		// Add stimulus here
 		repeat(1000)
