@@ -210,6 +210,7 @@ begin
 						pc = pc + 1;
 						opcode_state = opcode_state + 1;
 						addr = pc;
+						input_carry = ALU_CARRY_MUX_0;
 						alu_opcode = ALU_OP_ADD;
 						input_1_select = ALU_IN_MUX_DATA;
 						input_2_select = ALU_IN_MUX_X;
@@ -267,6 +268,7 @@ begin
 						opcode_state = opcode_state + 1;
 						addr = pc;
 						alu_opcode = ALU_OP_ADD;
+						input_carry = ALU_CARRY_MUX_0;
 						input_1_select = ALU_IN_MUX_DATA;
 						input_2_select = ALU_IN_MUX_X;
 					end
@@ -279,12 +281,14 @@ begin
 						begin
 							opcode_state = opcode_state + 1;
 							alu_opcode = ALU_OP_PASS_A;
+							input_carry = ALU_CARRY_MUX_0;
 							input_1_select = ALU_IN_MUX_DATA;
 						end
 						else
 						begin
 							opcode_state = opcode_state + 1;
 							alu_opcode = ALU_OP_INC;
+							input_carry = ALU_CARRY_MUX_0;
 							input_1_select = ALU_IN_MUX_DATA;
 						end
 					end
@@ -343,6 +347,7 @@ begin
 					begin
 						alu_opcode = ALU_OP_PASS_A;
 						input_1_select = ALU_IN_MUX_A;
+						input_carry = ALU_CARRY_MUX_0;
 						opcode_state = opcode_state + 1;
 					end
 					3'd1:
@@ -359,6 +364,7 @@ begin
 					begin
 						alu_opcode = ALU_OP_PASS_A;
 						input_1_select = ALU_IN_MUX_X;
+						input_carry = ALU_CARRY_MUX_0;
 						opcode_state = opcode_state + 1;
 					end
 					3'd1:
@@ -375,6 +381,7 @@ begin
 					begin
 						alu_opcode = ALU_OP_PASS_A;
 						input_1_select = ALU_IN_MUX_A;
+						input_carry = ALU_CARRY_MUX_0;
 						opcode_state = opcode_state + 1;
 					end
 					3'd1:
@@ -391,6 +398,7 @@ begin
 					begin
 						alu_opcode = ALU_OP_PASS_A;
 						input_1_select = ALU_IN_MUX_Y;
+						input_carry = ALU_CARRY_MUX_0;
 						opcode_state = opcode_state + 1;
 					end
 					3'd1:
@@ -407,6 +415,7 @@ begin
 					begin
 						alu_opcode = ALU_OP_INC;
 						input_1_select = ALU_IN_MUX_X;
+						input_carry = ALU_CARRY_MUX_0;
 						opcode_state = opcode_state + 1;
 					end
 					3'd1:
@@ -423,6 +432,7 @@ begin
 					begin
 						alu_opcode = ALU_OP_DEC;
 						input_1_select = ALU_IN_MUX_X;
+						input_carry = ALU_CARRY_MUX_0;
 						opcode_state = opcode_state + 1;
 					end
 					3'd1:
@@ -439,6 +449,7 @@ begin
 					begin
 						alu_opcode = ALU_OP_INC;
 						input_1_select = ALU_IN_MUX_Y;
+						input_carry = ALU_CARRY_MUX_0;
 						opcode_state = opcode_state + 1;
 					end
 					3'd1:
@@ -455,6 +466,7 @@ begin
 					begin
 						alu_opcode = ALU_OP_DEC;
 						input_1_select = ALU_IN_MUX_Y;
+						input_carry = ALU_CARRY_MUX_0;
 						opcode_state = opcode_state + 1;
 					end
 					3'd1:
@@ -473,13 +485,13 @@ begin
 						opcode_state = opcode_state + 1;
 						addr = pc;
 						alu_opcode = ALU_OP_ADD;
+						input_carry = ALU_CARRY_MUX_CIN;
 						input_1_select = ALU_IN_MUX_A;
 						input_2_select = ALU_IN_MUX_DATA;
 					end
 					3'd1:
 					begin
 						A = alu_out;
-						input_carry = ALU_CARRY_MUX_CIN;
 						done = 8'd1;
 					end
 				endcase
@@ -495,11 +507,11 @@ begin
 						addr = pc;
 						input_1_select = ALU_IN_MUX_A;
 						input_2_select = ALU_IN_MUX_DATA;
+						input_carry = ALU_CARRY_MUX_CIN;
 					end
 					3'd1:
 					begin
 						A = alu_out;
-						input_carry = ALU_CARRY_MUX_CIN;
 						done = 8'd1;
 					end
 				endcase
@@ -515,6 +527,7 @@ begin
 						addr = pc;
 						input_1_select = ALU_IN_MUX_A;
 						input_2_select = ALU_IN_MUX_DATA;
+						input_carry = ALU_CARRY_MUX_0;
 					end
 					3'd1:
 					begin
@@ -534,6 +547,7 @@ begin
 						addr = pc;
 						input_1_select = ALU_IN_MUX_A;
 						input_2_select = ALU_IN_MUX_DATA;
+						input_carry = ALU_CARRY_MUX_0;
 					end
 					3'd1:
 					begin
@@ -553,6 +567,7 @@ begin
 						addr = pc;
 						input_1_select = ALU_IN_MUX_A;
 						input_2_select = ALU_IN_MUX_DATA;
+						input_carry = ALU_CARRY_MUX_0;
 					end
 					3'd1:
 					begin
@@ -563,12 +578,12 @@ begin
 			end
 			8'h38: //SEC, i
 			begin
-				input_carry = ALU_CARRY_MUX_1;
+				alu_cin = 1'b1;
 				done = 8'd1;
 			end
 			8'h18: //CLC, i
 			begin
-				input_carry = ALU_CARRY_MUX_0;
+				alu_cin = 1'b0;
 				done = 8'd1;
 			end
 			8'hEA: //NOP, i
