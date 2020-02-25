@@ -89,7 +89,7 @@ module cpu_core_test;
 		ROM[14] = 8'hAA; //TAX
 		ROM[15] = 8'hA8; //TAY
 		ROM[16] = 8'hA2; //LDX #$FF
-		ROM[17] = 8'hFE;
+		ROM[17] = 8'hFF;
 		ROM[18] = 8'h8A; //TXA
 		ROM[19] = 8'h98; //TYA
 		ROM[20] = 8'hE8; //INX
@@ -101,12 +101,12 @@ module cpu_core_test;
 		ROM[26] = 8'hB5; //LDA, $80,X
 		ROM[27] = 8'h80;
 		ROM[28] = 8'hAD;
-		ROM[29] = 8'hFF;
+		ROM[29] = 8'h01;
 		ROM[30] = 8'h00;
 		ROM[31] = 8'hBD;
-		ROM[32] = 8'h00;
+		ROM[32] = 8'h01;
 		ROM[33] = 8'h00;
-		ROM[126] = 8'hF0;
+		ROM[127] = 8'hF0;
 		ROM[254] = 8'hAA;
 		ROM[255] = 8'hFE;
 		ROM[256] = 8'hEF;

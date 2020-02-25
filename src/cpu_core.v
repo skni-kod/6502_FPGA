@@ -218,11 +218,11 @@ begin
 					3'd1:
 					begin
 						opcode_state = opcode_state + 1;
-						addr = alu_out;
 					end
 					3'd2:
 					begin
 						opcode_state = opcode_state + 1;
+						addr = alu_out;
 					end
 					3'd3:
 					begin
@@ -279,7 +279,7 @@ begin
 						addr = pc;
 						if (alu_cout == 0)
 						begin
-							opcode_state = opcode_state + 1;
+							opcode_state = opcode_state + 2;
 							alu_opcode = ALU_OP_PASS_A;
 							input_carry = ALU_CARRY_MUX_0;
 							input_1_select = ALU_IN_MUX_DATA;
