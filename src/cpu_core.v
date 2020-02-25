@@ -47,6 +47,10 @@ localparam ALU_IN_MUX_DATA = 8'h04;
 localparam ALU_IN_MUX_SP = 8'h05;
 localparam ALU_IN_MUX_ONE = 8'h06;
 
+localparam ALU_CARRY_MUX_0 = 8'h01;
+localparam ALU_CARRY_MUX_1  = 8'h02;
+localparam ALU_CARRY_MUX_CIN = 8'h03;
+
 localparam ALU_OP_AND = 8'h01;
 localparam ALU_OP_OR  = 8'h02;
 localparam ALU_OP_XOR = 8'h03;
@@ -84,10 +88,12 @@ wire alu_cout;
 
 reg [2:0] input_1_select;
 reg [2:0] input_2_select;
+reg [1:0] input_carry;
 
 ALU_COMPLETE alu(
 	.input_1_select(input_1_select),
 	.input_2_select(input_2_select),
+	.input_carry(input_carry),
 	.a_reg(A),
 	.x_reg(X),
 	.y_reg(Y),
@@ -473,7 +479,7 @@ begin
 					3'd1:
 					begin
 						A = alu_out;
-						alu_cin = alu_cout;
+						input_carry = ALU_CARRY_MUX_CIN;
 						done = 8'd1;
 					end
 				endcase
@@ -493,7 +499,7 @@ begin
 					3'd1:
 					begin
 						A = alu_out;
-						alu_cin = alu_cout;
+						input_carry = ALU_CARRY_MUX_CIN;
 						done = 8'd1;
 					end
 				endcase
@@ -557,12 +563,12 @@ begin
 			end
 			8'h38: //SEC, i
 			begin
-				alu_cin = 1;
+				input_carry = ALU_CARRY_MUX_1;
 				done = 8'd1;
 			end
 			8'h18: //CLC, i
 			begin
-				alu_cin = 0;
+				input_carry = ALU_CARRY_MUX_0;
 				done = 8'd1;
 			end
 			8'hEA: //NOP, i

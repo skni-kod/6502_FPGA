@@ -1,26 +1,27 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date:    21:56:36 04/20/2019 
-// Design Name: 
-// Module Name:    ALU_COMPLETE 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
+// Company:
+// Engineer:
 //
-// Dependencies: 
+// Create Date:    21:56:36 04/20/2019
+// Design Name:
+// Module Name:    ALU_COMPLETE
+// Project Name:
+// Target Devices:
+// Tool versions:
+// Description:
 //
-// Revision: 
+// Dependencies:
+//
+// Revision:
 // Revision 0.01 - File Created
-// Additional Comments: 
+// Additional Comments:
 //
 //////////////////////////////////////////////////////////////////////////////////
 module ALU_COMPLETE(
     input [2:0] input_1_select,
     input [2:0] input_2_select,
+    input [1:0] input_carry,
     input [7:0] a_reg,
     input [7:0] x_reg,
     input [7:0] y_reg,
@@ -36,30 +37,39 @@ wire [7:0] mux_1_out;
 wire [7:0] mux_2_out;
 
 ALU_INPUT_MUX mux_1(
-		.mux_code(input_1_select), 
-		.a_reg(a_reg), 
-		.x_reg(x_reg), 
-		.y_reg(y_reg), 
-		.data_in(data_in), 
-		.sp(sp), 
+		.mux_code(input_1_select),
+		.a_reg(a_reg),
+		.x_reg(x_reg),
+		.y_reg(y_reg),
+		.data_in(data_in),
+		.sp(sp),
 		.out(mux_1_out)
 );
 
+
 ALU_INPUT_MUX mux_2(
-		.mux_code(input_2_select), 
-		.a_reg(a_reg), 
-		.x_reg(x_reg), 
-		.y_reg(y_reg), 
-		.data_in(data_in), 
-		.sp(sp), 
+		.mux_code(input_2_select),
+		.a_reg(a_reg),
+		.x_reg(x_reg),
+		.y_reg(y_reg),
+		.data_in(data_in),
+		.sp(sp),
 		.out(mux_2_out)
+);
+
+wire mux_carry_out;
+
+ALU_CARRY_MUX mux_carry(
+	.mux_code(input_carry),
+	.cin(cin),
+	.out(mux_carry_out)
 );
 
 ALU alu(
 		.a(mux_1_out),
 		.b(mux_2_out),
 		.opcode(alu_opcode),
-		.carry_in(cin),
+		.carry_in(mux_carry_out),
 		.y(out),
 		.carry_out(cout)
 );
