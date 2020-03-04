@@ -78,7 +78,7 @@ reg [15:0] pc = 3'd0;
 reg [2:0] state = 3'd0;
 reg [2:0] opcode_state = 3'd0;
 reg [7:0] opcode = 8'd0;
-reg [7:0] absolute = 8'd0;
+reg [7:0] lsbyte = 8'd0;
 reg done = 8'd0;
 
 wire [7:0] alu_out;
@@ -242,14 +242,14 @@ begin
 					end
 					3'd1:
 					begin
-						absolute = din;
+						lsbyte = din;
 						pc = pc + 1;
 						opcode_state = opcode_state + 1;
 						addr = pc;
 					end
 					3'd2:
 					begin
-						addr = {din, absolute};
+						addr = {din, lsbyte};
 						opcode_state = opcode_state + 1;
 					end
 					3'd3:
@@ -274,7 +274,7 @@ begin
 					end
 					3'd1:
 					begin
-						absolute = alu_out;
+						lsbyte = alu_out;
 						pc = pc + 1;
 						addr = pc;
 						if (alu_cout == 0)
@@ -298,7 +298,7 @@ begin
 					end
 					3'd3:
 					begin
-						addr = {alu_out, absolute};
+						addr = {alu_out, lsbyte};
 						opcode_state = opcode_state + 1;
 					end
 					3'd4:
