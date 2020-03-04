@@ -67,6 +67,7 @@ localparam ALU_OP_SUB = 8'h23;
 localparam ALU_OP_DEC = 8'h24;
 
 localparam ALU_OP_PASS_A = 8'h31;
+localparam ALU_OP_NOP = 8'h32;
 
 reg [7:0] A;
 reg [7:0] X;
@@ -372,6 +373,7 @@ begin
 						opcode_state = opcode_state + 1;
 						addr = lsbyte + 1;
 						lsbyte = alu_out;
+						alu_opcode = ALU_OP_NOP;
 					end
 					3'd3:
 					begin

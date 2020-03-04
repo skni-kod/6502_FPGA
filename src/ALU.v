@@ -1,30 +1,30 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date:    22:16:06 12/03/2018 
-// Design Name: 
-// Module Name:    ALU 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
+// Company:
+// Engineer:
 //
-// Dependencies: 
+// Create Date:    22:16:06 12/03/2018
+// Design Name:
+// Module Name:    ALU
+// Project Name:
+// Target Devices:
+// Tool versions:
+// Description:
 //
-// Revision: 
+// Dependencies:
+//
+// Revision:
 // Revision 0.01 - File Created
-// Additional Comments: 
+// Additional Comments:
 //
 //////////////////////////////////////////////////////////////////////////////////
 
 module ALU(
-	input wire [7:0] a, 
-	input wire [7:0] b, 
+	input wire [7:0] a,
+	input wire [7:0] b,
 	input wire [7:0] opcode,
 	input wire carry_in,
- 
+
 	output reg [7:0]  y,
 	output reg carry_out
 	/*output reg zero,
@@ -48,8 +48,9 @@ module ALU(
 	localparam ALU_OP_DEC = 8'h24;
 
 	localparam ALU_OP_PASS_A = 8'h31;
+	localparam ALU_OP_NOP = 8'h32;
 	//localparam ALU_OP_CMP = 8'h31;
- 
+
 	always @(*)
 	begin
 		case(opcode)
@@ -64,9 +65,9 @@ module ALU(
 			ALU_OP_ASL:
 				{carry_out, y} = a << 1;
 			ALU_OP_ROL:
-				{carry_out, y} = {a, carry_in}; 
+				{carry_out, y} = {a, carry_in};
 			ALU_OP_ROR:
-				{carry_out, y} = {a[0], carry_in, a[7:1]}; 
+				{carry_out, y} = {a[0], carry_in, a[7:1]};
 			ALU_OP_ADD:
 				{carry_out, y} = a + b + carry_in;
 			ALU_OP_INC:
@@ -80,6 +81,8 @@ module ALU(
 				y = a - 1'b1;
 			ALU_OP_PASS_A:
 				{carry_out, y} = 8'b0 + a;
+			ALU_OP_NOP:
+				;
 			/*ALU_OP_CMP:
 				begin
 					if(a >= b)
