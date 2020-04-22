@@ -72,7 +72,7 @@ module cpu_core_test;
 		ROM[3] = 8'd3;
 		ROM[4] = 8'h69;
 		ROM[5] = 8'd4;*/
-		ROM[0] = 8'hA9; //LDA, #3
+		/*ROM[0] = 8'hA9; //LDA, #3
 		ROM[1] = 8'h04;
 		ROM[2] = 8'h38; //SEC
 		ROM[3] = 8'hE9; //SBC, #2
@@ -119,7 +119,8 @@ module cpu_core_test;
 		ROM[254] = 8'hAA;
 		ROM[255] = 8'hFE;
 		ROM[256] = 8'hEF;
-		ROM[257] = 8'hDF;
+		ROM[257] = 8'hDF;*/
+		
 		din = ROM[0];
 
 		// Wait 100 ns for global reset to finish
