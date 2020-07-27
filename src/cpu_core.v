@@ -109,6 +109,7 @@ assign clk_out = clk;
 
 task immediate;
 begin
+	(* full_case *)
 	case(opcode_state)
 		3'd0:
 		begin
@@ -385,6 +386,7 @@ begin
 			8'hA9: //LDA, #
 			begin
 				immediate();
+				(* full_case *)
 				case(opcode_state)
 					3'd1:
 					begin
@@ -450,6 +452,7 @@ begin
 			end
 			8'hB1: //LDA, (ind),Y
 			begin
+				indirect_indexed();
 				case(opcode_state)
 					3'd4:
 					begin
@@ -477,6 +480,50 @@ begin
 					end
 				endcase
 			end
+			8'hA6: //LDX, zp
+			begin
+				zeropage();
+				case(opcode_state)
+					3'd2:
+					begin
+						X = din;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'hB6: //LDX, zp,Y
+			begin
+				zeropage_register(1'd1);
+				case(opcode_state)
+					3'd3:
+					begin
+						X = din;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'hAE: //LDX, abs
+			begin
+				absolute();
+				case(opcode_state)
+					3'd3:
+					begin
+						X = din;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'hBD: //LDX, abs,Y
+			begin
+				absolute_register(1'd1);
+				case(opcode_state)
+					3'd4:
+					begin
+						X = din;
+						done = 8'd1;
+					end
+				endcase
+			end
 			8'hA0: //LDY, #
 			begin
 				immediate();
@@ -484,6 +531,122 @@ begin
 					3'd1:
 					begin
 						Y = din;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'hA4: //LDY, zp
+			begin
+				zeropage();
+				case(opcode_state)
+					3'd2:
+					begin
+						Y = din;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'hB4: //LDY, zp,X
+			begin
+				zeropage_register(1'd0);
+				case(opcode_state)
+					3'd3:
+					begin
+						Y = din;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'hAC: //LDY, abs
+			begin
+				absolute();
+				case(opcode_state)
+					3'd3:
+					begin
+						Y = din;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'hBC: //LDY, abs,X
+			begin
+				absolute_register(1'd0);
+				case(opcode_state)
+					3'd4:
+					begin
+						Y = din;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'h69: //ADC, #
+			begin
+				immediate();
+				case(opcode_state)
+					3'd0:
+					begin
+						alu_opcode = ALU_OP_ADD;
+						input_carry = ALU_CARRY_MUX_CIN;
+						input_1_select = ALU_IN_MUX_A;
+						input_2_select = ALU_IN_MUX_DATA;
+					end
+					3'd1:
+					begin
+						A = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'h65: //ADC, zp
+			begin
+				zeropage();
+				case(opcode_state)
+					3'd1:
+					begin
+						alu_opcode = ALU_OP_ADD;
+						input_carry = ALU_CARRY_MUX_CIN;
+						input_1_select = ALU_IN_MUX_A;
+						input_2_select = ALU_IN_MUX_DATA;
+					end
+					3'd2:
+					begin
+						A = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'h75: //ADC, zp,X
+			begin
+				zeropage_register(1'd0);
+				case(opcode_state)
+					3'd2:
+					begin
+						alu_opcode = ALU_OP_ADD;
+						input_carry = ALU_CARRY_MUX_CIN;
+						input_1_select = ALU_IN_MUX_A;
+						input_2_select = ALU_IN_MUX_DATA;
+					end
+					3'd3:
+					begin
+						A = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+			8'hAC: //ADC, abs
+			begin
+				absolute();
+				case(opcode_state)
+					3'd2:
+					begin
+						alu_opcode = ALU_OP_ADD;
+						input_carry = ALU_CARRY_MUX_CIN;
+						input_1_select = ALU_IN_MUX_A;
+						input_2_select = ALU_IN_MUX_DATA;
+					end
+					3'd3:
+					begin
+						A = alu_out;
 						done = 8'd1;
 					end
 				endcase
@@ -620,24 +783,6 @@ begin
 					3'd1:
 					begin
 						Y = alu_out;
-						done = 8'd1;
-					end
-				endcase
-			end
-			8'h69: //ADC, #
-			begin
-				immediate();
-				case(opcode_state)
-					3'd0:
-					begin
-						alu_opcode = ALU_OP_ADD;
-						input_carry = ALU_CARRY_MUX_CIN;
-						input_1_select = ALU_IN_MUX_A;
-						input_2_select = ALU_IN_MUX_DATA;
-					end
-					3'd1:
-					begin
-						A = alu_out;
 						done = 8'd1;
 					end
 				endcase
