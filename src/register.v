@@ -31,6 +31,31 @@ module reg_XY( //module for x and y registers
 
 endmodule
 
+//Module for Program Counter Low Select Register
+module reg_PCLS(
+	input wire PCL_LOAD,
+	input wire ADL_LOAD,
+	input wire [7:0] PCL_DATA,
+	input wire [7:0] ADL_DATA,
+	output reg [7:0] OUT
+);
+
+	reg [7:0] register;
+
+	always@(*)
+	begin
+		if(PCL_LOAD)
+			register = PCL_DATA;
+		if(ADL_LOAD)
+			register = ADL_DATA;
+
+		//Data on output is refreshed with any input signal change
+		OUT = register;
+	end
+
+endmodule
+
+
 //module for A input register of ALU
 //Prefix tells the name of source/target of data
 module reg_AI(
@@ -49,6 +74,7 @@ module reg_AI(
 		if(SB_LOAD)
 			register = SB_DATA;
 
+		//Data on output is refreshed with any input signal change
 		TO_ALU = register;
 	end
 
@@ -78,6 +104,7 @@ module reg_BI(
 		if(ADL_LOAD)
 			register = ADL_DATA;
 
+		//Data on output is refreshed with any input signal change
 		TO_ALU = register;
 	end
 
