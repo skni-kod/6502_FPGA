@@ -31,15 +31,17 @@ module reg_XY( //module for x and y registers
 
 endmodule
 
+//module for A input register of ALU
+//Prefix tells the name of source/target of data
 module reg_AI(
 		input wire ZERO_LOAD,
 		input wire SB_LOAD,
 		input wire [7:0] SB_DATA,
-		output reg [7:0] TO_ALU
+		output reg [7:0] TO_ALU //Data sent to ALU
 	);
 
 	reg [7:0] register;
-
+	
 	always@(*)
 	begin
 		if(ZERO_LOAD) 		
@@ -52,6 +54,34 @@ module reg_AI(
 
 endmodule
 
+//module for B input register of ALU
+//Prefix tells the name of source/target of data
+module reg_BI(
+		input wire DB_LOAD,
+		input wire INV_DB_LOAD, //Load data from inverted Data Bus
+		input wire ADL_LOAD,
+		input wire [7:0] ADL_DATA,
+		input wire [7:0] DB_DATA,
+		input wire [7:0] INV_DB_DATA,
+		output reg [7:0] TO_ALU //Data sent to ALU
+	);
+
+	reg [7:0] register;
+
+	always@(*)
+	begin
+		//Maybe implement inversion In Place?
+		if(INV_DB_LOAD) 		
+			register = INV_DB_DATA;
+		if(DB_LOAD)
+			register = DB_DATA;
+		if(ADL_LOAD)
+			register = ADL_DATA;
+
+		TO_ALU = register;
+	end
+
+endmodule
 
 module reg_ACC( //module for accumulator register
 	//prefix tells the name of source/target datapath
