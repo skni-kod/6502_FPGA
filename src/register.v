@@ -31,6 +31,27 @@ module reg_XY( //module for x and y registers
 
 endmodule
 
+module reg_AI(
+		input wire ZERO_LOAD,
+		input wire SB_LOAD,
+		input wire [7:0] SB_DATA,
+		output reg [7:0] TO_ALU
+	);
+
+	reg [7:0] register;
+
+	always@(*)
+	begin
+		if(ZERO_LOAD) 		
+			register = 0;
+		if(SB_LOAD)
+			register = SB_DATA;
+
+		TO_ALU = register;
+	end
+
+endmodule
+
 
 module reg_ACC( //module for accumulator register
 	//prefix tells the name of source/target datapath
