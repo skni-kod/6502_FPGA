@@ -31,6 +31,34 @@ module reg_XY( //module for x and y registers
 
 endmodule
 
+//Module for Program Counter Low Register
+module reg_PCL(
+	input wire DB_BUS_ENABLE,
+	input wire ADL_BUS_ENABLE,
+	input wire CLK,
+	input wire [7:0] DATA, //Fed from "Increment logic" block
+	output reg [7:0] DB_BUS,
+	output reg [7:0] ADL_BUS,
+	output reg [7:0] PCL_LOOP //Datapath back to PCLS
+	);
+
+	reg [7:0] register;
+
+	always@(*)
+	begin
+		if(CLK)
+			register = DATA;
+		if(DB_BUS_ENABLE)
+			DB_BUS = register;
+		if(ADL_BUS_ENABLE)
+			ADL_BUS = register;
+
+		//Fallback loop is always updated after cycle
+		PCL_LOOP = register;
+	end
+
+endmodule
+
 //Module for Program Counter Low Select Register
 module reg_PCLS(
 	input wire PCL_LOAD,
@@ -38,7 +66,7 @@ module reg_PCLS(
 	input wire [7:0] PCL_DATA,
 	input wire [7:0] ADL_DATA,
 	output reg [7:0] OUT
-);
+	);
 
 	reg [7:0] register;
 
