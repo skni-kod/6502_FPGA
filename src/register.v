@@ -182,14 +182,15 @@ module reg_S( //module for Stack Pointer Register
 
 	always@(*)
 	begin
-		if(SB_LOAD)
+		if(RELOAD)
+			register = register;
+		else if(SB_LOAD)
 			register = SB_DATA;
 		if(SB_BUS_ENABLE)
 			SB_OUT = register;
 		if(ADL_BUS_ENABLE)
 			ADL_OUT = register;
-		if(RELOAD)
-			register = register;
+		
 	end
 
 endmodule
