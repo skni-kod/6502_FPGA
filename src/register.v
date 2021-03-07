@@ -112,7 +112,6 @@ endmodule
 //Prefix tells the name of source/target of data
 module reg_BI(
 		input wire DB_LOAD,
-		input wire INV_DB_LOAD, //Load data from inverted Data Bus
 		input wire ADL_LOAD,
 		input wire [7:0] ADL_DATA,
 		input wire [7:0] DB_DATA,
@@ -124,9 +123,9 @@ module reg_BI(
 
 	always@(*)
 	begin
-		//Maybe implement inversion In Place?
+		//Inversion of Data Bus realised in_place
 		if(INV_DB_LOAD) 		
-			register = INV_DB_DATA;
+			register = ~DB_DATA;
 		if(DB_LOAD)
 			register = DB_DATA;
 		if(ADL_LOAD)
