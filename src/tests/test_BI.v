@@ -30,7 +30,6 @@ module test_BI;
 	reg ADL_LOAD;
 	reg [7:0] ADL_DATA;
 	reg [7:0] DB_DATA;
-	reg [7:0] INV_DB_DATA;
 
 	// Outputs
 	wire [7:0] TO_ALU;
@@ -41,8 +40,7 @@ module test_BI;
 		.INV_DB_LOAD(INV_DB_LOAD), 
 		.ADL_LOAD(ADL_LOAD), 
 		.ADL_DATA(ADL_DATA), 
-		.DB_DATA(DB_DATA), 
-		.INV_DB_DATA(INV_DB_DATA), 
+		.DB_DATA(DB_DATA),  
 		.TO_ALU(TO_ALU)
 	);
 
@@ -53,7 +51,6 @@ module test_BI;
 		ADL_LOAD = 0;
 		ADL_DATA = 0;
 		DB_DATA = 0;
-		INV_DB_DATA = 0;
 
 		// Wait 100 ns for global reset to finish
 		#100;

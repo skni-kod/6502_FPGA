@@ -112,10 +112,10 @@ endmodule
 //Prefix tells the name of source/target of data
 module reg_BI(
 		input wire DB_LOAD,
+		input wire INV_DB_LOAD,
 		input wire ADL_LOAD,
 		input wire [7:0] ADL_DATA,
 		input wire [7:0] DB_DATA,
-		input wire [7:0] INV_DB_DATA,
 		output reg [7:0] TO_ALU //Data sent to ALU
 	);
 
