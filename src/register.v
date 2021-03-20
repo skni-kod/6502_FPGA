@@ -87,12 +87,12 @@ module reg_PSR(
 			register[0] = DATA[0];
 
 		if(Z_LOAD_DB1)
-			register[2] = DATA[1];
+			register[1] = DATA[1];
 		if(Z_LOAD_DBZ) begin
 			if(DATA>0)
-				register[2] = 0;
+				register[1] = 0;
 			else
-				register[2] = 1;
+				register[1] = 1;
 		end
 
 		if(I_LOAD_DB2)
