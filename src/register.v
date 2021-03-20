@@ -31,6 +31,101 @@ module reg_XY( //module for x and y registers
 
 endmodule
 
+//Module for Processor Status Register
+//First set of inputs are command lines
+//Second set of inputs are data lines
+//X_LOAD_Y means load given Y signal into X bit of register
+//DBx means x-th bit of Data Bus
+module reg_PSR( 
+	input wire C_LOAD_DB0,
+	input wire C_LOAD_IR5,
+	input wire C_LOAD_ACR,
+
+	input wire Z_LOAD_DB1,
+	input wire Z_LOAD_DBZ, //DBZ is OR'ed DB input
+	
+	input wire I_LOAD_DB2,
+	input wire I_LOAD_IR5,
+	
+	input wire D_LOAD_DB3,
+	input wire D_LOAD_IR5,
+
+	input wire V_LOAD_DB6,
+	input wire V_LOAD_AVR,
+	input wire V_LOAD_I, //Copy I to V ???
+
+	input wire N_LOAD_DB7,
+
+	input wire BUS_ENABLE,
+
+
+	input wire [7:0] DATA,
+	input wire IR5,
+	input wire ACR,
+	input wire AVR,
+
+	output reg [7:0] OUT
+	);
+
+	reg [7:0] register;
+	
+	
+
+	always@(*)
+	begin
+		register[5] = 1;
+		//bits 4 and 5 theoretically do not exist within the register itself
+		//instead they are set on the fly by certain instructions
+		//5th bit is always set to 1 though, so it is hardcoded here as well
+
+		//INPUT section
+		if(C_LOAD_ACR)
+			register[0] = ACR;
+		if(C_LOAD_IR5)
+			register[0] = IR5;
+		if(C_LOAD_DB0)
+			register[0] = DATA[0];
+
+		if(Z_LOAD_DB1)
+			register[2] = DATA[1];
+		if(Z_LOAD_DBZ) begin
+			if(DATA>0)
+				register[2] = 1;
+			else
+				register[2] = 0;
+		end
+
+		if(I_LOAD_DB2)
+			register[2] = DATA[2];
+		if(I_LOAD_IR5)
+			register[2] = IR5;
+
+		if(D_LOAD_DB3)
+			register[3] = DATA[3];
+		if(D_LOAD_IR5)
+			register[3] = IR5;
+
+		if(V_LOAD_AVR)
+			register[6] = AVR;
+		if(V_LOAD_DB6)
+			register[6] = DATA[6];
+		if(V_LOAD_I)
+			register[6] = register[2];
+
+		if(N_LOAD_DB7)
+			register[7] = DATA[7];
+
+
+		//OUTPUT section
+		if(BUS_ENABLE)
+			OUT = register;
+		
+
+	end
+
+
+endmodule
+
 //Module for Program Counter Low Register
 module reg_PCL(
 	input wire DB_BUS_ENABLE,
