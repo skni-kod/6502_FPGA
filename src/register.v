@@ -42,7 +42,7 @@ module reg_PSR(
 	input wire C_LOAD_ACR,
 
 	input wire Z_LOAD_DB1,
-	input wire Z_LOAD_DBZ, //DBZ is OR'ed DB input
+	input wire Z_LOAD_DBZ, //DBZ is NOR'ed DB input
 	
 	input wire I_LOAD_DB2,
 	input wire I_LOAD_IR5,
@@ -90,9 +90,9 @@ module reg_PSR(
 			register[2] = DATA[1];
 		if(Z_LOAD_DBZ) begin
 			if(DATA>0)
-				register[2] = 1;
-			else
 				register[2] = 0;
+			else
+				register[2] = 1;
 		end
 
 		if(I_LOAD_DB2)
