@@ -49,9 +49,9 @@ module reg_ADD_HOLD(
 		if(ALU_LOAD)
 			register = ALU_DATA;
 		if(SB_L_BUS_ENABLE)
-			SB_BUS[7:1] = register[7:1]; 
+			SB_BUS[6:0] = register[6:0]; 
 		if(SB_H_BUS_ENABLE)
-			SB_BUS[0] = register[0];
+			SB_BUS[7] = register[7];
 		if(ADL_BUS_ENABLE)
 			ADL_BUS = register;
 
