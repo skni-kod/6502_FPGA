@@ -31,6 +31,34 @@ module reg_XY( //module for x and y registers
 
 endmodule
 
+module reg_ADD_HOLD(
+	input wire ALU_LOAD,
+	input wire ADL_BUS_ENABLE,
+	input wire SB_L_BUS_ENABLE,
+	input wire SB_H_BUS_ENABLE,
+	input wire [7:0] ALU_DATA,
+
+	output reg [7:0] ADL_BUS,
+	output reg [7:0] SB_BUS
+);
+
+	reg [7:0] register;
+	
+	always@(*)
+	begin
+		if(ALU_LOAD)
+			register = ALU_DATA;
+		if(SB_L_BUS_ENABLE)
+			SB_BUS[7:1] = register[7:1]; 
+		if(SB_H_BUS_ENABLE)
+			SB_BUS[0] = register[0];
+		if(ADL_BUS_ENABLE)
+			ADL_BUS = register;
+
+	end
+
+endmodule
+
 //Module for Processor Status Register
 //First set of inputs are command lines
 //Second set of inputs are data lines
