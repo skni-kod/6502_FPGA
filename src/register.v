@@ -8,7 +8,7 @@
 //as it is done in the following module
 
 module reg_XY( //module for x and y registers
-	//Possible to use as ADDRESS BUS, PRECODE register as well,
+	//Possible to use as ADDRESS BUS, PRECODE, INSTRUCTION, register as well,
 	//Just lock BUS_ENABLE high
 	input wire LOAD,
 	input wire BUS_ENABLE,
@@ -31,6 +31,37 @@ module reg_XY( //module for x and y registers
 
 endmodule
 
+//Module for Input Data Latch
+module reg_DL( 
+	input wire LOAD,
+	input wire DB_BUS_ENABLE,
+	input wire ADL_BUS_ENABLE,
+	input wire ADH_BUS_ENABLE,
+	input wire [7:0] DATA,
+	output reg [7:0] DB_OUT,
+	output reg [7:0] ADL_OUT,
+	output reg [7:0] ADH_OUT
+	);
+
+	reg [7:0] register;
+	
+
+	always@(*)
+	begin
+		if(LOAD)
+			register = DATA;
+		if(DB_BUS_ENABLE)
+			DB_OUT = register;
+		if(ADL_BUS_ENABLE)
+			ADL_OUT = register;
+		if(ADH_BUS_ENABLE)
+			ADH_OUT = register;
+	end
+
+
+endmodule
+
+//Module for Adder Hold Register, holding ALU optput
 module reg_ADD_HOLD(
 	input wire ALU_LOAD,
 	input wire ADL_BUS_ENABLE,
