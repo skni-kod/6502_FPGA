@@ -233,6 +233,28 @@ module reg_PCH(
 
 endmodule
 
+//Module for Program Counter High Select Register
+module reg_PCHS(
+	input wire PCH_LOAD,
+	input wire ADH_LOAD,
+	input wire [7:0] PCH_DATA,
+	input wire [7:0] ADH_DATA,
+	output reg [7:0] OUT
+	);
+
+	reg [7:0] register;
+
+	always@(*)
+	begin
+		if(PCH_LOAD)
+			register = PCH_DATA;
+		if(ADH_LOAD)
+			register = ADH_DATA;
+		//Data on output is refreshed with any input signal change
+		OUT = register;
+	end
+
+endmodule
 
 //module for A input register of ALU
 //Prefix tells the name of source/target of data
