@@ -199,9 +199,36 @@ module reg_PCLS(
 			register = PCL_DATA;
 		if(ADL_LOAD)
 			register = ADL_DATA;
-
 		//Data on output is refreshed with any input signal change
 		OUT = register;
+	end
+
+endmodule
+
+//Module for Program Counter High Register
+module reg_PCH(
+	input wire DB_BUS_ENABLE,
+	input wire ADH_BUS_ENABLE,
+	input wire CLK,
+	input wire [7:0] DATA, //Fed from "Increment logic" block
+	output reg [7:0] DB_BUS,
+	output reg [7:0] ADH_BUS,
+	output reg [7:0] PCH_LOOP //Datapath back to PCHS
+	);
+
+	reg [7:0] register;
+
+	always@(*)
+	begin
+		if(CLK)
+			register = DATA;
+		if(DB_BUS_ENABLE)
+			DB_BUS = register;
+		if(ADH_BUS_ENABLE)
+			ADH_BUS = register;
+
+		//Fallback loop is always updated after cycle
+		PCH_LOOP = register;
 	end
 
 endmodule
