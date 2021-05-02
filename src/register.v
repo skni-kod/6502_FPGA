@@ -13,7 +13,7 @@ module reg_XY( //module for x and y registers
 	input wire LOAD,
 	input wire BUS_ENABLE,
 	input wire [7:0] DATA,
-	output reg [7:0] OUT
+	output reg [7:0] DATA_OUT
 	);
 
 	reg [7:0] register;
@@ -25,7 +25,9 @@ module reg_XY( //module for x and y registers
 		if(LOAD)
 			register = DATA;
 		if(BUS_ENABLE)
-			OUT = register;
+			DATA_OUT = register;
+		else
+			DATA_OUT = 8'bzzzzzzzz;
 	end
 
 
