@@ -13,7 +13,7 @@ module reg_XY( //module for x and y registers
 	input wire LOAD,
 	input wire BUS_ENABLE,
 	input wire [7:0] DATA,
-	output reg [7:0] OUT
+	output reg [7:0] DATA_OUT
 	);
 
 	reg [7:0] register;
@@ -24,8 +24,11 @@ module reg_XY( //module for x and y registers
 	begin
 		if(LOAD)
 			register = DATA;
+			
 		if(BUS_ENABLE)
-			OUT = register;
+			DATA_OUT = register;
+		else
+			DATA_OUT = 8'hZZ;
 	end
 
 
@@ -50,12 +53,21 @@ module reg_DL(
 	begin
 		if(LOAD)
 			register = DATA;
+			
 		if(DB_BUS_ENABLE)
 			DB_OUT = register;
+		else
+			DB_OUT = 8'hZZ;
+			
 		if(ADL_BUS_ENABLE)
 			ADL_OUT = register;
+		else
+			ADL_OUT = 8'hZZ;
+			
 		if(ADH_BUS_ENABLE)
 			ADH_OUT = register;
+		else
+			ADH_OUT = 8'hZZ;
 	end
 
 
@@ -79,12 +91,21 @@ module reg_ADD_HOLD(
 	begin
 		if(ALU_LOAD)
 			register = ALU_DATA;
+			
 		if(SB_L_BUS_ENABLE)
 			SB_BUS[6:0] = register[6:0]; 
+		else
+			SB_BUS[6:0] = 7'bzzzzzzz;
+			
 		if(SB_H_BUS_ENABLE)
 			SB_BUS[7] = register[7];
+		else
+			SB_BUS[7] = 1'bz;
+			
 		if(ADL_BUS_ENABLE)
 			ADL_BUS = register;
+		else
+			ADL_BUS = 8'hZZ;
 
 	end
 
@@ -123,7 +144,7 @@ module reg_PSR(
 	input wire ACR,
 	input wire AVR,
 
-	output reg [7:0] OUT
+	output reg [7:0] DATA_OUT
 	);
 
 	reg [7:0] register;
@@ -177,7 +198,9 @@ module reg_PSR(
 
 		//OUTPUT section
 		if(BUS_ENABLE)
-			OUT = register;
+			DATA_OUT = register;
+		else
+			DATA_OUT = 8'hZZ;
 		
 
 	end
@@ -202,10 +225,16 @@ module reg_PCL(
 	begin
 		if(CLK)
 			register = DATA;
+			
 		if(DB_BUS_ENABLE)
 			DB_BUS = register;
+		else
+			DB_BUS = 8'hZZ;
+			
 		if(ADL_BUS_ENABLE)
 			ADL_BUS = register;
+		else
+			ADL_BUS = 8'hZZ;
 
 		//Fallback loop is always updated after cycle
 		PCL_LOOP = register;
@@ -219,7 +248,7 @@ module reg_PCLS(
 	input wire ADL_LOAD,
 	input wire [7:0] PCL_DATA,
 	input wire [7:0] ADL_DATA,
-	output reg [7:0] OUT
+	output reg [7:0] DATA_OUT
 	);
 
 	reg [7:0] register;
@@ -231,7 +260,7 @@ module reg_PCLS(
 		if(ADL_LOAD)
 			register = ADL_DATA;
 		//Data on output is refreshed with any input signal change
-		OUT = register;
+		DATA_OUT = register;
 	end
 
 endmodule
@@ -253,10 +282,17 @@ module reg_PCH(
 	begin
 		if(CLK)
 			register = DATA;
+			
 		if(DB_BUS_ENABLE)
 			DB_BUS = register;
+		else
+			DB_BUS = 8'hZZ;
+			
 		if(ADH_BUS_ENABLE)
 			ADH_BUS = register;
+		else
+			ADH_BUS = 8'hZZ;
+			
 
 		//Fallback loop is always updated after cycle
 		PCH_LOOP = register;
@@ -270,7 +306,7 @@ module reg_PCHS(
 	input wire ADH_LOAD,
 	input wire [7:0] PCH_DATA,
 	input wire [7:0] ADH_DATA,
-	output reg [7:0] OUT
+	output reg [7:0] DATA_OUT
 	);
 
 	reg [7:0] register;
@@ -282,7 +318,7 @@ module reg_PCHS(
 		if(ADH_LOAD)
 			register = ADH_DATA;
 		//Data on output is refreshed with any input signal change
-		OUT = register;
+		DATA_OUT = register;
 	end
 
 endmodule
@@ -357,11 +393,18 @@ module reg_ACC( //module for accumulator register
 	always@(*)
 	begin
 		if(LOAD)
-			  register = DAA_DATA;
+			register = DAA_DATA;
+			
 		if(SB_BUS_ENABLE)
-			  SB_OUT = register;
+			SB_OUT = register;
+		else
+			SB_OUT = 8'hZZ;
+			  
 		if(DB_BUS_ENABLE)
-			  DB_OUT = register;
+			DB_OUT = register;
+		else
+			DB_OUT = 8'hZZ;
+			  
 	end
 
 
@@ -388,10 +431,16 @@ module reg_S( //module for Stack Pointer Register
 			register = register;
 		else if(SB_LOAD)
 			register = SB_DATA;
+			
 		if(SB_BUS_ENABLE)
 			SB_OUT = register;
+		else
+			SB_OUT = 8'hZZ;
+			
 		if(ADL_BUS_ENABLE)
 			ADL_OUT = register;
+		else
+			SB_OUT = 8'hZZ;
 		
 	end
 

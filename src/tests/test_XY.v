@@ -30,14 +30,14 @@ module test_XY;
 	reg [7:0] DATA;
 
 	// Outputs
-	wire [7:0] OUT;
+	wire [7:0] DATA_OUT;
 
 	// Instantiate the Unit Under Test (UUT)
 	reg_XY uut (
 		.LOAD(LOAD), 
 		.BUS_ENABLE(BUS_ENABLE), 
 		.DATA(DATA), 
-		.OUT(OUT)
+		.DATA_OUT(DATA_OUT)
 	);
 
 	initial begin
@@ -48,7 +48,7 @@ module test_XY;
 
 		// Wait 100 ns for global reset to finish
 		#100;
-      $monitor($time, ": LOAD_SIGNAL: %b, BUS_ENABLE_SIGNAL: %b, DATA_IN_STATE: %h, DATA_OUT_STATE: %h", LOAD, BUS_ENABLE, DATA, OUT);
+      $monitor($time, ": LOAD_SIGNAL: %b, BUS_ENABLE_SIGNAL: %b, DATA_IN_STATE: %h, DATA_OUT_STATE: %h", LOAD, BUS_ENABLE, DATA, DATA_OUT);
 		// Add stimulus here
 		LOAD = 1;
 		#1;
