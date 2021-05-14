@@ -1,0 +1,13 @@
+[Inputs]
+RELOAD
+SB_LOAD
+SB_BUS_ENABLE
+ADL_BUS_ENABLE
+=SB_DATA[7:0]=
+[Outputs]
+=SB_OUT[7:0]=
+=ADL_OUT[7:0]=
+[BiDir]
+[ATTRIBUTES]
+VeriModel reg_S
+

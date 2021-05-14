@@ -1,0 +1,10 @@
+[Inputs]
+ZERO_LOAD
+SB_LOAD
+=SB_DATA[7:0]=
+[Outputs]
+=TO_ALU[7:0]=
+[BiDir]
+[ATTRIBUTES]
+VeriModel reg_AI
+

@@ -1,0 +1,10 @@
+[Inputs]
+LOAD
+BUS_ENABLE
+=DATA[7:0]=
+[Outputs]
+=OUT[7:0]=
+[BiDir]
+[ATTRIBUTES]
+VeriModel reg_XY
+

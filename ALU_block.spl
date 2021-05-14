@@ -1,0 +1,19 @@
+[Inputs]
+sig_DAA
+sig_CARRY_IN
+sig_SUMS
+sig_ANDS
+sig_EORS
+sig_ORS
+sig_SRS
+=reg_A[7:0]=
+=reg_B[7:0]=
+[Outputs]
+sig_AVR
+sig_ACR
+sig_HC
+=ALU_OUT[7:0]=
+[BiDir]
+[ATTRIBUTES]
+VeriModel ALU_block
+

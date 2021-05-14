@@ -1,0 +1,13 @@
+[Inputs]
+ALU_LOAD
+ADL_BUS_ENABLE
+SB_L_BUS_ENABLE
+SB_H_BUS_ENABLE
+=ALU_DATA[7:0]=
+[Outputs]
+=ADL_BUS[7:0]=
+=SB_BUS[7:0]=
+[BiDir]
+[ATTRIBUTES]
+VeriModel reg_ADD_HOLD
+

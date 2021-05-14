@@ -1,0 +1,13 @@
+[Inputs]
+DB_BUS_ENABLE
+ADH_BUS_ENABLE
+CLK
+=DATA[7:0]=
+[Outputs]
+=DB_BUS[7:0]=
+=ADH_BUS[7:0]=
+=PCH_LOOP[7:0]=
+[BiDir]
+[ATTRIBUTES]
+VeriModel reg_PCH
+
