@@ -1,0 +1,9 @@
+[Inputs]
+CLK
+[Outputs]
+PHI1
+PHI2
+[BiDir]
+[ATTRIBUTES]
+VeriModel clock_generator
+

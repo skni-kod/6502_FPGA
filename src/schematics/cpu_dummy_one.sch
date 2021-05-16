@@ -88,6 +88,26 @@
         <signal name="XLXN_119" />
         <signal name="XLXN_120" />
         <signal name="XLXN_219" />
+        <signal name="XLXN_220" />
+        <signal name="XLXN_221" />
+        <signal name="XLXN_225" />
+        <signal name="XLXN_226" />
+        <signal name="XLXN_227" />
+        <signal name="XLXN_228" />
+        <signal name="XLXN_229" />
+        <signal name="DATA_IN(7:0)" />
+        <signal name="XLXN_231" />
+        <signal name="DATA_OUT(7:0)" />
+        <signal name="CLOCK_IN" />
+        <signal name="DUMMY_OP(7:0)" />
+        <signal name="ADH(7:0)" />
+        <signal name="ADL(7:0)" />
+        <port polarity="Input" name="DATA_IN(7:0)" />
+        <port polarity="Output" name="DATA_OUT(7:0)" />
+        <port polarity="Input" name="CLOCK_IN" />
+        <port polarity="Input" name="DUMMY_OP(7:0)" />
+        <port polarity="Output" name="ADH(7:0)" />
+        <port polarity="Output" name="ADL(7:0)" />
         <blockdef name="ALU_block">
             <timestamp>2021-5-14T17:22:37</timestamp>
             <rect width="320" x="64" y="-576" height="576" />
@@ -407,6 +427,13 @@
             <line x2="144" y1="-144" y2="-144" x1="64" />
             <line x2="64" y1="-48" y2="-144" x1="64" />
         </blockdef>
+        <blockdef name="clock_generator">
+            <timestamp>2021-5-16T10:32:33</timestamp>
+            <rect width="256" x="64" y="-128" height="128" />
+            <line x2="0" y1="-96" y2="-96" x1="64" />
+            <line x2="384" y1="-96" y2="-96" x1="320" />
+            <line x2="384" y1="-32" y2="-32" x1="320" />
+        </blockdef>
         <block symbolname="ALU_block" name="XLXI_1">
             <blockpin signalname="XLXN_86" name="sig_DAA" />
             <blockpin signalname="XLXN_85" name="sig_CARRY_IN" />
@@ -437,7 +464,7 @@
             <blockpin signalname="XLXN_2(7:0)" name="TO_ALU(7:0)" />
         </block>
         <block symbolname="reg_ADD_HOLD" name="XLXI_4">
-            <blockpin name="ALU_LOAD" />
+            <blockpin signalname="XLXN_228" name="ALU_LOAD" />
             <blockpin signalname="XLXN_96" name="ADL_BUS_ENABLE" />
             <blockpin signalname="XLXN_97" name="SB_L_BUS_ENABLE" />
             <blockpin signalname="XLXN_98" name="SB_H_BUS_ENABLE" />
@@ -483,7 +510,7 @@
         <block symbolname="reg_PCH" name="XLXI_9">
             <blockpin signalname="XLXN_56" name="DB_BUS_ENABLE" />
             <blockpin signalname="XLXN_57" name="ADH_BUS_ENABLE" />
-            <blockpin name="CLK" />
+            <blockpin signalname="XLXN_228" name="CLK" />
             <blockpin signalname="XLXN_35(7:0)" name="DATA(7:0)" />
             <blockpin name="DB_BUS(7:0)" />
             <blockpin signalname="XLXN_11(7:0)" name="ADH_BUS(7:0)" />
@@ -499,7 +526,7 @@
         <block symbolname="reg_PCL" name="XLXI_11">
             <blockpin signalname="XLXN_52" name="DB_BUS_ENABLE" />
             <blockpin signalname="XLXN_53" name="ADL_BUS_ENABLE" />
-            <blockpin name="CLK" />
+            <blockpin signalname="XLXN_228" name="CLK" />
             <blockpin signalname="XLXN_33(7:0)" name="DATA(7:0)" />
             <blockpin signalname="XLXN_5(7:0)" name="DB_BUS(7:0)" />
             <blockpin signalname="XLXN_8(7:0)" name="ADL_BUS(7:0)" />
@@ -523,26 +550,26 @@
         </block>
         <block symbolname="reg_XY" name="XLXI_14">
             <blockpin signalname="XLXN_46" name="LOAD" />
-            <blockpin name="BUS_ENABLE" />
+            <blockpin signalname="XLXN_231" name="BUS_ENABLE" />
             <blockpin signalname="XLXN_11(7:0)" name="DATA(7:0)" />
-            <blockpin name="DATA_OUT(7:0)" />
+            <blockpin signalname="ADH(7:0)" name="DATA_OUT(7:0)" />
         </block>
         <block symbolname="reg_DL" name="XLXI_16">
-            <blockpin name="LOAD" />
+            <blockpin signalname="XLXN_228" name="LOAD" />
             <blockpin signalname="XLXN_37" name="DB_BUS_ENABLE" />
             <blockpin signalname="XLXN_38" name="ADL_BUS_ENABLE" />
             <blockpin signalname="XLXN_39" name="ADH_BUS_ENABLE" />
-            <blockpin name="DATA(7:0)" />
+            <blockpin signalname="DATA_IN(7:0)" name="DATA(7:0)" />
             <blockpin signalname="XLXN_5(7:0)" name="DB_OUT(7:0)" />
             <blockpin signalname="XLXN_8(7:0)" name="ADL_OUT(7:0)" />
             <blockpin signalname="XLXN_18(7:0)" name="ADH_OUT(7:0)" />
         </block>
         <block symbolname="PRECHARGE" name="XLXI_17">
-            <blockpin name="DATA_IN" />
+            <blockpin signalname="XLXN_228" name="DATA_IN" />
             <blockpin signalname="XLXN_11(7:0)" name="DATA_OUT(7:0)" />
         </block>
         <block symbolname="PRECHARGE" name="XLXI_18">
-            <blockpin name="DATA_IN" />
+            <blockpin signalname="XLXN_228" name="DATA_IN" />
             <blockpin signalname="XLXN_5(7:0)" name="DATA_OUT(7:0)" />
         </block>
         <block symbolname="PRECHARGE" name="XLXI_19">
@@ -550,7 +577,7 @@
             <blockpin signalname="XLXN_3(7:0)" name="DATA_OUT(7:0)" />
         </block>
         <block symbolname="PRECHARGE" name="XLXI_20">
-            <blockpin name="DATA_IN" />
+            <blockpin signalname="XLXN_228" name="DATA_IN" />
             <blockpin signalname="XLXN_8(7:0)" name="DATA_OUT(7:0)" />
         </block>
         <block symbolname="PASS_MOS" name="XLXI_22">
@@ -566,9 +593,9 @@
         </block>
         <block symbolname="reg_XY" name="XLXI_26">
             <blockpin signalname="XLXN_47" name="LOAD" />
-            <blockpin name="BUS_ENABLE" />
+            <blockpin signalname="XLXN_231" name="BUS_ENABLE" />
             <blockpin signalname="XLXN_8(7:0)" name="DATA(7:0)" />
-            <blockpin name="DATA_OUT(7:0)" />
+            <blockpin signalname="ADL(7:0)" name="DATA_OUT(7:0)" />
         </block>
         <block symbolname="PASS_MOS" name="XLXI_27">
             <blockpin signalname="XLXN_59" name="ENABLE" />
@@ -602,7 +629,7 @@
             <blockpin name="sig_RDY" />
             <blockpin name="sig_R_NOT_W" />
             <blockpin name="sig_SV" />
-            <blockpin name="sig_I30(7:0)" />
+            <blockpin signalname="DUMMY_OP(7:0)" name="sig_I30(7:0)" />
             <blockpin name="sig_interrupt(7:0)" />
             <blockpin name="timing_IN(7:0)" />
             <blockpin signalname="XLXN_37" name="DL_DB" />
@@ -670,14 +697,25 @@
             <blockpin signalname="XLXN_81" name="SB_S" />
         </block>
         <block symbolname="and2" name="XLXI_33">
-            <blockpin name="I0" />
+            <blockpin signalname="XLXN_221" name="I0" />
             <blockpin signalname="XLXN_45" name="I1" />
             <blockpin signalname="XLXN_46" name="O" />
         </block>
         <block symbolname="and2" name="XLXI_34">
-            <blockpin name="I0" />
+            <blockpin signalname="XLXN_221" name="I0" />
             <blockpin signalname="XLXN_48" name="I1" />
             <blockpin signalname="XLXN_47" name="O" />
+        </block>
+        <block symbolname="clock_generator" name="XLXI_35">
+            <blockpin signalname="CLOCK_IN" name="CLK" />
+            <blockpin signalname="XLXN_221" name="PHI1" />
+            <blockpin signalname="XLXN_228" name="PHI2" />
+        </block>
+        <block symbolname="reg_XY" name="XLXI_36">
+            <blockpin signalname="XLXN_221" name="LOAD" />
+            <blockpin signalname="XLXN_231" name="BUS_ENABLE" />
+            <blockpin signalname="XLXN_5(7:0)" name="DATA(7:0)" />
+            <blockpin signalname="DATA_OUT(7:0)" name="DATA_OUT(7:0)" />
         </block>
     </netlist>
     <sheet sheetnum="1" width="7040" height="5440">
@@ -1326,5 +1364,79 @@
             <wire x2="592" y1="3680" y2="4432" x1="592" />
             <wire x2="1040" y1="3680" y2="3680" x1="592" />
         </branch>
+        <instance x="5904" y="5136" name="XLXI_35" orien="R270">
+        </instance>
+        <branch name="XLXN_221">
+            <wire x2="5520" y1="960" y2="960" x1="2656" />
+            <wire x2="5520" y1="960" y2="1824" x1="5520" />
+            <wire x2="5600" y1="1824" y2="1824" x1="5520" />
+            <wire x2="5520" y1="1824" y2="2176" x1="5520" />
+            <wire x2="5520" y1="2176" y2="2592" x1="5520" />
+            <wire x2="5520" y1="2592" y2="3408" x1="5520" />
+            <wire x2="5584" y1="3408" y2="3408" x1="5520" />
+            <wire x2="5520" y1="3408" y2="3488" x1="5520" />
+            <wire x2="5808" y1="3488" y2="3488" x1="5520" />
+            <wire x2="5808" y1="3488" y2="4752" x1="5808" />
+        </branch>
+        <branch name="XLXN_228">
+            <wire x2="2208" y1="160" y2="160" x1="2160" />
+            <wire x2="2160" y1="160" y2="1200" x1="2160" />
+            <wire x2="2576" y1="1200" y2="1200" x1="2160" />
+            <wire x2="2608" y1="1200" y2="1200" x1="2576" />
+            <wire x2="2576" y1="1200" y2="2176" x1="2576" />
+            <wire x2="3456" y1="2176" y2="2176" x1="2576" />
+            <wire x2="4112" y1="2176" y2="2176" x1="3456" />
+            <wire x2="3456" y1="2176" y2="2672" x1="3456" />
+            <wire x2="3552" y1="2672" y2="2672" x1="3456" />
+            <wire x2="3456" y1="2672" y2="3584" x1="3456" />
+            <wire x2="5872" y1="3584" y2="3584" x1="3456" />
+            <wire x2="5872" y1="3584" y2="4752" x1="5872" />
+            <wire x2="3440" y1="1280" y2="2112" x1="3440" />
+            <wire x2="3456" y1="2112" y2="2112" x1="3440" />
+            <wire x2="3456" y1="2112" y2="2176" x1="3456" />
+            <wire x2="4528" y1="2112" y2="2112" x1="3456" />
+            <wire x2="3472" y1="1280" y2="1280" x1="3440" />
+            <wire x2="5280" y1="2096" y2="2096" x1="3456" />
+            <wire x2="3456" y1="2096" y2="2112" x1="3456" />
+            <wire x2="4528" y1="1280" y2="2112" x1="4528" />
+            <wire x2="4624" y1="1280" y2="1280" x1="4528" />
+            <wire x2="5280" y1="368" y2="2096" x1="5280" />
+            <wire x2="5776" y1="368" y2="368" x1="5280" />
+        </branch>
+        <branch name="DATA_IN(7:0)">
+            <wire x2="2208" y1="416" y2="416" x1="1936" />
+        </branch>
+        <instance x="2656" y="800" name="XLXI_36" orien="R180">
+        </instance>
+        <branch name="XLXN_231">
+            <wire x2="2720" y1="896" y2="896" x1="2656" />
+            <wire x2="2720" y1="896" y2="928" x1="2720" />
+            <wire x2="6000" y1="928" y2="928" x1="2720" />
+            <wire x2="6000" y1="928" y2="1856" x1="6000" />
+            <wire x2="6016" y1="1856" y2="1856" x1="6000" />
+            <wire x2="6000" y1="1856" y2="3440" x1="6000" />
+            <wire x2="6096" y1="3440" y2="3440" x1="6000" />
+        </branch>
+        <branch name="DATA_OUT(7:0)">
+            <wire x2="2272" y1="768" y2="768" x1="1936" />
+        </branch>
+        <iomarker fontsize="28" x="1936" y="416" name="DATA_IN(7:0)" orien="R180" />
+        <branch name="CLOCK_IN">
+            <wire x2="5808" y1="5136" y2="5168" x1="5808" />
+        </branch>
+        <iomarker fontsize="28" x="5808" y="5168" name="CLOCK_IN" orien="R90" />
+        <branch name="DUMMY_OP(7:0)">
+            <wire x2="48" y1="3280" y2="3280" x1="16" />
+        </branch>
+        <iomarker fontsize="28" x="16" y="3280" name="DUMMY_OP(7:0)" orien="R180" />
+        <iomarker fontsize="28" x="1936" y="768" name="DATA_OUT(7:0)" orien="R180" />
+        <branch name="ADH(7:0)">
+            <wire x2="6432" y1="1984" y2="1984" x1="6400" />
+        </branch>
+        <iomarker fontsize="28" x="6432" y="1984" name="ADH(7:0)" orien="R0" />
+        <branch name="ADL(7:0)">
+            <wire x2="6512" y1="3568" y2="3568" x1="6480" />
+        </branch>
+        <iomarker fontsize="28" x="6512" y="3568" name="ADL(7:0)" orien="R0" />
     </sheet>
 </drawing>
