@@ -1,2 +1,0 @@
-select figure at 4259 809 8 -branches -sn=1
-select all in 4242 809 4259 860 -branches -enclosed -sn=1

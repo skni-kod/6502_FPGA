@@ -1,0 +1,10 @@
+[Inputs]
+sig_INC
+=IN_PCXS[7:0]=
+[Outputs]
+CARRY_OUT
+=OUT_PCX[7:0]=
+[BiDir]
+[ATTRIBUTES]
+VeriModel misc_INC_PC
+

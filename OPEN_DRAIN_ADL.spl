@@ -1,0 +1,10 @@
+[Inputs]
+sig_ZERO
+sig_ONE
+sig_TWO
+[Outputs]
+=DATA_OUT[7:0]=
+[BiDir]
+[ATTRIBUTES]
+VeriModel OPEN_DRAIN_ADL
+
