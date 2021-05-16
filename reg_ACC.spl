@@ -1,0 +1,12 @@
+[Inputs]
+LOAD
+SB_BUS_ENABLE
+DB_BUS_ENABLE
+=DAA_DATA[7:0]=
+[Outputs]
+=SB_OUT[7:0]=
+=DB_OUT[7:0]=
+[BiDir]
+[ATTRIBUTES]
+VeriModel reg_ACC
+

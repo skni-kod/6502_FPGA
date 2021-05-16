@@ -1,0 +1,9 @@
+[Inputs]
+ENABLE
+[Outputs]
+[BiDir]
+=INOUT1[7:0]=
+=INOUT2[7:0]=
+[ATTRIBUTES]
+VeriModel PASS_MOS
+

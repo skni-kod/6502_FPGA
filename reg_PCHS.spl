@@ -1,0 +1,11 @@
+[Inputs]
+PCH_LOAD
+ADH_LOAD
+=PCH_DATA[7:0]=
+=ADH_DATA[7:0]=
+[Outputs]
+=DATA_OUT[7:0]=
+[BiDir]
+[ATTRIBUTES]
+VeriModel reg_PCHS
+

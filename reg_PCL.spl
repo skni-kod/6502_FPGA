@@ -1,0 +1,13 @@
+[Inputs]
+DB_BUS_ENABLE
+ADL_BUS_ENABLE
+CLK
+=DATA[7:0]=
+[Outputs]
+=DB_BUS[7:0]=
+=ADL_BUS[7:0]=
+=PCL_LOOP[7:0]=
+[BiDir]
+[ATTRIBUTES]
+VeriModel reg_PCL
+
