@@ -75,7 +75,7 @@ reg [7:0] Y;
 reg [7:0] data_in;
 reg [7:0] stack_pointer;
 
-reg [15:0] pc = 3'd0;
+reg [15:0] pc = 16'd0;
 reg [2:0] state = 3'd0;
 reg [2:0] opcode_state = 3'd0;
 reg [7:0] opcode = 8'd0;

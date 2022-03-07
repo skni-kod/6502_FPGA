@@ -66,53 +66,60 @@ module cpu_core_test;
 	initial begin
 		// Initialize Inputs
 		clk = 0;
+		//Comments are in format
+		//Mnemonic, (argument, list) [size_in_bytes]
+		
 		/*ROM[0] = 8'hA9;
 		ROM[1] = 8'd3;
 		ROM[2] = 8'h69;
 		ROM[3] = 8'd3;
 		ROM[4] = 8'h69;
 		ROM[5] = 8'd4;*/
-		ROM[0] = 8'hA9; //LDA, #3
+		ROM[0] = 8'hA9; //LDA, #4 [2]
 		ROM[1] = 8'h04;
-		ROM[2] = 8'h38; //SEC
-		ROM[3] = 8'hE9; //SBC, #2
+		ROM[2] = 8'h38; //SEC [1]
+		ROM[3] = 8'hE9; //SBC, #2 [2]
 		ROM[4] = 8'h02;
-		ROM[5] = 8'h18; //CLC
-		ROM[6] = 8'h69; //ADC, #4
+		ROM[5] = 8'h18; //CLC [1]
+		ROM[6] = 8'h69; //ADC, #4 [2]
 		ROM[7] = 8'h04;
-		ROM[8] = 8'h29; //AND, #5
+		ROM[8] = 8'h29; //AND, #5 [2]
 		ROM[9] = 8'h05;
-		ROM[10] = 8'h49; //EOR, #6
+		ROM[10] = 8'h49; //EOR, #6 [2]
 		ROM[11] = 8'h06;
-		ROM[12] = 8'h09; //OR, #7
+		ROM[12] = 8'h09; //OR, #7 [2]
 		ROM[13] = 8'h07;
-		ROM[14] = 8'hAA; //TAX
-		ROM[15] = 8'hA8; //TAY
-		ROM[16] = 8'hA2; //LDX #$FF
+		ROM[14] = 8'hAA; //TAX [1]
+		ROM[15] = 8'hA8; //TAY [1]
+		ROM[16] = 8'hA2; //LDX #$FF [2]
 		ROM[17] = 8'hFF;
-		ROM[18] = 8'h8A; //TXA
-		ROM[19] = 8'h98; //TYA
-		ROM[20] = 8'hE8; //INX
-		ROM[21] = 8'hC8; //INY
-		ROM[22] = 8'hCA; //DEX
-		ROM[23] = 8'h88; //DEY
-		ROM[24] = 8'hA5; //LDA, $01
+		ROM[18] = 8'h8A; //TXA [1]
+		ROM[19] = 8'h98; //TYA [1]
+		ROM[20] = 8'hE8; //INX [1]
+		ROM[21] = 8'hC8; //INY [1]
+		ROM[22] = 8'hCA; //DEX [1]
+		ROM[23] = 8'h88; //DEY [1]
+		ROM[24] = 8'hA5; //LDA, $01 [2]
 		ROM[25] = 8'h01;
-		ROM[26] = 8'hB5; //LDA, $80,X
+		ROM[26] = 8'hB5; //LDA, $80,X [2]
 		ROM[27] = 8'h80;
-		ROM[28] = 8'hAD;
+		ROM[28] = 8'hAD; //LDA, $0001 [3]
 		ROM[29] = 8'h01;
 		ROM[30] = 8'h00;
-		ROM[31] = 8'hBD;
+		ROM[31] = 8'hBD; //LDA, $0001, X [3]
 		ROM[32] = 8'h01;
 		ROM[33] = 8'h00;
-		ROM[34] = 8'hA1;
+		ROM[34] = 8'hA1; //LDA, $D8, X  [2]
 		ROM[35] = 8'hD8;
-		ROM[36] = 8'hA0;
+		ROM[36] = 8'hA0; //LDY, #01 [2]
 		ROM[37] = 8'h01;
-		ROM[38] = 8'hB1;
+		ROM[38] = 8'hB1; //LDA, $1D [2]
 		ROM[39] = 8'h1D;
-		ROM[127] = 8'hFF;
+		/*
+			Unknown state
+			XX values until ROM[127]
+		*/
+		ROM[127] = 8'hFF; //illegal opcode
 		ROM[128] = 8'h00;
 		ROM[215] = 8'h00;
 		ROM[216] = 8'h01;
