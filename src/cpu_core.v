@@ -166,101 +166,97 @@ begin
 	addr = pc;
 	if(state == ST_RUN)
 		case(opcode)
-			8'hA9: //LDA, #
+		
+			//Section 0x0X (1/16)
+			
+			8'h09: //ORA, i
 			begin
 				case(opcode_state)
 					3'd0:
 					begin
 						pc = pc + 1;
 						opcode_state = opcode_state + 1;
+						alu_opcode = ALU_OP_OR;
 						addr = pc;
-					end
-					3'd1:
-					begin
-						A = din;
-						done = 8'd1;
-					end
-				endcase
-			end
-			8'hA5: //LDA, zp
-			begin
-				case(opcode_state)
-					3'd0:
-					begin
-						pc = pc + 1;
-						opcode_state = opcode_state + 1;
-						addr = pc;
-					end
-					3'd1:
-					begin
-						opcode_state = opcode_state + 1;
-						addr = din;
-					end
-					3'd2:
-					begin
-						A = din;
-						done = 8'd1;
-					end
-				endcase
-			end
-			8'hB5: //LDA, zp,X
-			begin
-				case(opcode_state)
-					3'd0:
-					begin
-						pc = pc + 1;
-						opcode_state = opcode_state + 1;
-						addr = pc;
+						input_1_select = ALU_IN_MUX_A;
+						input_2_select = ALU_IN_MUX_DATA;
 						input_carry = ALU_CARRY_MUX_0;
-						alu_opcode = ALU_OP_ADD;
-						input_1_select = ALU_IN_MUX_DATA;
-						input_2_select = ALU_IN_MUX_X;
 					end
 					3'd1:
 					begin
-						opcode_state = opcode_state + 1;
-					end
-					3'd2:
-					begin
-						opcode_state = opcode_state + 1;
-						addr = alu_out;
-					end
-					3'd3:
-					begin
-						A = din;
+						A = alu_out;
 						done = 8'd1;
 					end
 				endcase
 			end
-			8'hAD: //LDA, abs
+			
+			//Section 0x1X (1/16)
+			
+			8'h18: //CLC, i
+			begin
+				alu_cin = 1'b0;
+				done = 8'd1;
+			end
+			
+			//Section 0x2X (1/16)
+			
+			8'h29: //AND, i
 			begin
 				case(opcode_state)
 					3'd0:
 					begin
 						pc = pc + 1;
 						opcode_state = opcode_state + 1;
+						alu_opcode = ALU_OP_AND;
 						addr = pc;
+						input_1_select = ALU_IN_MUX_A;
+						input_2_select = ALU_IN_MUX_DATA;
+						input_carry = ALU_CARRY_MUX_0;
 					end
 					3'd1:
 					begin
-						lsbyte = din;
-						pc = pc + 1;
-						opcode_state = opcode_state + 1;
-						addr = pc;
-					end
-					3'd2:
-					begin
-						addr = {din, lsbyte};
-						opcode_state = opcode_state + 1;
-					end
-					3'd3:
-					begin
-						A = din;
+						A = alu_out;
 						done = 8'd1;
 					end
 				endcase
 			end
-			8'hBD: //LDA, abs,X
+			
+			//Section 0x3X (1/16)
+			
+			8'h38: //SEC, i
+			begin
+				alu_cin = 1'b1;
+				done = 8'd1;
+			end
+			
+			//Section 0x4X (1/16)
+			
+			8'h49: //EOR, i
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						pc = pc + 1;
+						opcode_state = opcode_state + 1;
+						alu_opcode = ALU_OP_XOR;
+						addr = pc;
+						input_1_select = ALU_IN_MUX_A;
+						input_2_select = ALU_IN_MUX_DATA;
+						input_carry = ALU_CARRY_MUX_0;
+					end
+					3'd1:
+					begin
+						A = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+			
+			//Section 0x5X (0/16)
+			
+			//Section 0x6X (1/16)
+			
+			8'h69: //ADC, #
 			begin
 				case(opcode_state)
 					3'd0:
@@ -269,46 +265,97 @@ begin
 						opcode_state = opcode_state + 1;
 						addr = pc;
 						alu_opcode = ALU_OP_ADD;
-						input_carry = ALU_CARRY_MUX_0;
-						input_1_select = ALU_IN_MUX_DATA;
-						input_2_select = ALU_IN_MUX_X;
+						input_carry = ALU_CARRY_MUX_CIN;
+						input_1_select = ALU_IN_MUX_A;
+						input_2_select = ALU_IN_MUX_DATA;
 					end
 					3'd1:
 					begin
-						lsbyte = alu_out;
-						pc = pc + 1;
-						addr = pc;
-						if (alu_cout == 0)
-						begin
-							opcode_state = opcode_state + 2;
-							alu_opcode = ALU_OP_PASS_A;
-							input_carry = ALU_CARRY_MUX_0;
-							input_1_select = ALU_IN_MUX_DATA;
-						end
-						else
-						begin
-							opcode_state = opcode_state + 1;
-							alu_opcode = ALU_OP_INC;
-							input_carry = ALU_CARRY_MUX_0;
-							input_1_select = ALU_IN_MUX_DATA;
-						end
-					end
-					3'd2:
-					begin
-						opcode_state = opcode_state + 1;
-					end
-					3'd3:
-					begin
-						addr = {alu_out, lsbyte};
-						opcode_state = opcode_state + 1;
-					end
-					3'd4:
-					begin
-						A = din;
+						A = alu_out;
 						done = 8'd1;
 					end
 				endcase
 			end
+			
+			//Section 0x7X (0/16)
+			
+			//Section 0x8X (2/16)
+			
+			8'h88: //DEY, i
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						alu_opcode = ALU_OP_DEC;
+						input_1_select = ALU_IN_MUX_Y;
+						input_carry = ALU_CARRY_MUX_0;
+						opcode_state = opcode_state + 1;
+					end
+					3'd1:
+					begin
+						Y = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+			
+			8'h8A: //TXA, i
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						alu_opcode = ALU_OP_PASS_A;
+						input_1_select = ALU_IN_MUX_X;
+						input_carry = ALU_CARRY_MUX_0;
+						opcode_state = opcode_state + 1;
+					end
+					3'd1:
+					begin
+						A = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+			
+			//Section 0x9X (1/16)
+			
+			8'h98: //TYA, i
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						alu_opcode = ALU_OP_PASS_A;
+						input_1_select = ALU_IN_MUX_Y;
+						input_carry = ALU_CARRY_MUX_0;
+						opcode_state = opcode_state + 1;
+					end
+					3'd1:
+					begin
+						A = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+			
+			//Section 0xAX (8/16)
+			
+			8'hA0: //LDY, #
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						pc = pc + 1;
+						opcode_state = opcode_state + 1;
+						addr = pc;
+					end
+					3'd1:
+					begin
+						Y = din;
+						done = 8'd1;
+					end
+				endcase
+			end
+
 			8'hA1: //LDA, (ind,X)
 			begin
 				case(opcode_state)
@@ -349,6 +396,132 @@ begin
 					end
 				endcase
 			end
+			
+			8'hA2: //LDX, #
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						pc = pc + 1;
+						opcode_state = opcode_state + 1;
+						addr = pc;
+					end
+					3'd1:
+					begin
+						X = din;
+						done = 8'd1;
+					end
+				endcase
+			end
+			
+			8'hA5: //LDA, zp
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						pc = pc + 1;
+						opcode_state = opcode_state + 1;
+						addr = pc;
+					end
+					3'd1:
+					begin
+						opcode_state = opcode_state + 1;
+						addr = din;
+					end
+					3'd2:
+					begin
+						A = din;
+						done = 8'd1;
+					end
+				endcase
+			end
+			
+			8'hA8: //TAY, i
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						alu_opcode = ALU_OP_PASS_A;
+						input_1_select = ALU_IN_MUX_A;
+						input_carry = ALU_CARRY_MUX_0;
+						opcode_state = opcode_state + 1;
+					end
+					3'd1:
+					begin
+						Y = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+		
+			8'hA9: //LDA, #
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						pc = pc + 1;
+						opcode_state = opcode_state + 1;
+						addr = pc;
+					end
+					3'd1:
+					begin
+						A = din;
+						done = 8'd1;
+					end
+				endcase
+			end
+			
+			
+			
+			8'hAA: //TAX, i
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						alu_opcode = ALU_OP_PASS_A;
+						input_1_select = ALU_IN_MUX_A;
+						input_carry = ALU_CARRY_MUX_0;
+						opcode_state = opcode_state + 1;
+					end
+					3'd1:
+					begin
+						X = alu_out;
+						done = 8'd1;
+					end
+				endcase
+			end
+			
+			8'hAD: //LDA, abs
+			begin
+				case(opcode_state)
+					3'd0:
+					begin
+						pc = pc + 1;
+						opcode_state = opcode_state + 1;
+						addr = pc;
+					end
+					3'd1:
+					begin
+						lsbyte = din;
+						pc = pc + 1;
+						opcode_state = opcode_state + 1;
+						addr = pc;
+					end
+					3'd2:
+					begin
+						addr = {din, lsbyte};
+						opcode_state = opcode_state + 1;
+					end
+					3'd3:
+					begin
+						A = din;
+						done = 8'd1;
+					end
+				endcase
+			end
+		
+			//Section 0xBX (3/16)
+			
 			8'hB1: //LDA, (ind),Y
 			begin
 				case(opcode_state)
@@ -403,7 +576,8 @@ begin
 					end
 				endcase
 			end
-			8'hA2: //LDX, #
+			
+			8'hB5: //LDA, zp,X
 			begin
 				case(opcode_state)
 					3'd0:
@@ -411,15 +585,29 @@ begin
 						pc = pc + 1;
 						opcode_state = opcode_state + 1;
 						addr = pc;
+						input_carry = ALU_CARRY_MUX_0;
+						alu_opcode = ALU_OP_ADD;
+						input_1_select = ALU_IN_MUX_DATA;
+						input_2_select = ALU_IN_MUX_X;
 					end
 					3'd1:
 					begin
-						X = din;
+						opcode_state = opcode_state + 1;
+					end
+					3'd2:
+					begin
+						opcode_state = opcode_state + 1;
+						addr = alu_out;
+					end
+					3'd3:
+					begin
+						A = din;
 						done = 8'd1;
 					end
 				endcase
 			end
-			8'hA0: //LDY, #
+			
+			8'hBD: //LDA, abs,X
 			begin
 				case(opcode_state)
 					3'd0:
@@ -427,99 +615,50 @@ begin
 						pc = pc + 1;
 						opcode_state = opcode_state + 1;
 						addr = pc;
+						alu_opcode = ALU_OP_ADD;
+						input_carry = ALU_CARRY_MUX_0;
+						input_1_select = ALU_IN_MUX_DATA;
+						input_2_select = ALU_IN_MUX_X;
 					end
 					3'd1:
 					begin
-						Y = din;
-						done = 8'd1;
+						lsbyte = alu_out;
+						pc = pc + 1;
+						addr = pc;
+						if (alu_cout == 0)
+						begin
+							opcode_state = opcode_state + 2;
+							alu_opcode = ALU_OP_PASS_A;
+							input_carry = ALU_CARRY_MUX_0;
+							input_1_select = ALU_IN_MUX_DATA;
+						end
+						else
+						begin
+							opcode_state = opcode_state + 1;
+							alu_opcode = ALU_OP_INC;
+							input_carry = ALU_CARRY_MUX_0;
+							input_1_select = ALU_IN_MUX_DATA;
+						end
 					end
-				endcase
-			end
-			8'hAA: //TAX, i
-			begin
-				case(opcode_state)
-					3'd0:
+					3'd2:
 					begin
-						alu_opcode = ALU_OP_PASS_A;
-						input_1_select = ALU_IN_MUX_A;
-						input_carry = ALU_CARRY_MUX_0;
 						opcode_state = opcode_state + 1;
 					end
-					3'd1:
+					3'd3:
 					begin
-						X = alu_out;
-						done = 8'd1;
-					end
-				endcase
-			end
-			8'h8A: //TXA, i
-			begin
-				case(opcode_state)
-					3'd0:
-					begin
-						alu_opcode = ALU_OP_PASS_A;
-						input_1_select = ALU_IN_MUX_X;
-						input_carry = ALU_CARRY_MUX_0;
+						addr = {alu_out, lsbyte};
 						opcode_state = opcode_state + 1;
 					end
-					3'd1:
+					3'd4:
 					begin
-						A = alu_out;
+						A = din;
 						done = 8'd1;
 					end
 				endcase
 			end
-			8'hA8: //TAY, i
-			begin
-				case(opcode_state)
-					3'd0:
-					begin
-						alu_opcode = ALU_OP_PASS_A;
-						input_1_select = ALU_IN_MUX_A;
-						input_carry = ALU_CARRY_MUX_0;
-						opcode_state = opcode_state + 1;
-					end
-					3'd1:
-					begin
-						Y = alu_out;
-						done = 8'd1;
-					end
-				endcase
-			end
-			8'h98: //TYA, i
-			begin
-				case(opcode_state)
-					3'd0:
-					begin
-						alu_opcode = ALU_OP_PASS_A;
-						input_1_select = ALU_IN_MUX_Y;
-						input_carry = ALU_CARRY_MUX_0;
-						opcode_state = opcode_state + 1;
-					end
-					3'd1:
-					begin
-						A = alu_out;
-						done = 8'd1;
-					end
-				endcase
-			end
-			8'hE8: //INX, i
-			begin
-				case(opcode_state)
-					3'd0:
-					begin
-						alu_opcode = ALU_OP_INC;
-						input_1_select = ALU_IN_MUX_X;
-						input_carry = ALU_CARRY_MUX_0;
-						opcode_state = opcode_state + 1;
-					end
-					3'd1:
-					begin
-						X = alu_out;
-						done = 8'd1;
-					end
-				endcase
-			end
+			
+			//Section 0xCX (2/16)
+			
 			8'hCA: //DEX, i
 			begin
 				case(opcode_state)
@@ -537,6 +676,7 @@ begin
 					end
 				endcase
 			end
+			
 			8'hC8: //INY, i
 			begin
 				case(opcode_state)
@@ -554,43 +694,29 @@ begin
 					end
 				endcase
 			end
-			8'h88: //DEY, i
+			
+			//Section 0xDX (0/16)
+			
+			//Section 0xEX (3/16)
+			
+			8'hE8: //INX, i
 			begin
 				case(opcode_state)
 					3'd0:
 					begin
-						alu_opcode = ALU_OP_DEC;
-						input_1_select = ALU_IN_MUX_Y;
+						alu_opcode = ALU_OP_INC;
+						input_1_select = ALU_IN_MUX_X;
 						input_carry = ALU_CARRY_MUX_0;
 						opcode_state = opcode_state + 1;
 					end
 					3'd1:
 					begin
-						Y = alu_out;
+						X = alu_out;
 						done = 8'd1;
 					end
 				endcase
 			end
-			8'h69: //ADC, #
-			begin
-				case(opcode_state)
-					3'd0:
-					begin
-						pc = pc + 1;
-						opcode_state = opcode_state + 1;
-						addr = pc;
-						alu_opcode = ALU_OP_ADD;
-						input_carry = ALU_CARRY_MUX_CIN;
-						input_1_select = ALU_IN_MUX_A;
-						input_2_select = ALU_IN_MUX_DATA;
-					end
-					3'd1:
-					begin
-						A = alu_out;
-						done = 8'd1;
-					end
-				endcase
-			end
+			
 			8'hE9: //SBC, #
 			begin
 				case(opcode_state)
@@ -611,80 +737,26 @@ begin
 					end
 				endcase
 			end
-			8'h29: //AND, i
-			begin
-				case(opcode_state)
-					3'd0:
-					begin
-						pc = pc + 1;
-						opcode_state = opcode_state + 1;
-						alu_opcode = ALU_OP_AND;
-						addr = pc;
-						input_1_select = ALU_IN_MUX_A;
-						input_2_select = ALU_IN_MUX_DATA;
-						input_carry = ALU_CARRY_MUX_0;
-					end
-					3'd1:
-					begin
-						A = alu_out;
-						done = 8'd1;
-					end
-				endcase
-			end
-			8'h09: //ORA, i
-			begin
-				case(opcode_state)
-					3'd0:
-					begin
-						pc = pc + 1;
-						opcode_state = opcode_state + 1;
-						alu_opcode = ALU_OP_OR;
-						addr = pc;
-						input_1_select = ALU_IN_MUX_A;
-						input_2_select = ALU_IN_MUX_DATA;
-						input_carry = ALU_CARRY_MUX_0;
-					end
-					3'd1:
-					begin
-						A = alu_out;
-						done = 8'd1;
-					end
-				endcase
-			end
-			8'h49: //EOR, i
-			begin
-				case(opcode_state)
-					3'd0:
-					begin
-						pc = pc + 1;
-						opcode_state = opcode_state + 1;
-						alu_opcode = ALU_OP_XOR;
-						addr = pc;
-						input_1_select = ALU_IN_MUX_A;
-						input_2_select = ALU_IN_MUX_DATA;
-						input_carry = ALU_CARRY_MUX_0;
-					end
-					3'd1:
-					begin
-						A = alu_out;
-						done = 8'd1;
-					end
-				endcase
-			end
-			8'h38: //SEC, i
-			begin
-				alu_cin = 1'b1;
-				done = 8'd1;
-			end
-			8'h18: //CLC, i
-			begin
-				alu_cin = 1'b0;
-				done = 8'd1;
-			end
+			
 			8'hEA: //NOP, i
 			begin
 				done = 8'd1;
 			end
+			
+			//Section 0xFX (0/16)
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			default:
 			begin
 			end
